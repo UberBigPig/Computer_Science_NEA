@@ -1,7 +1,0 @@
-1. I am going to start by creating the files that store the variables that need to be saved. I am then going to create functions to let me save and load the variables. 
-
-2. I am now going to start the login system using the functions that I have made to save the data. 
-
-3. I changed the save and load procedures to take the variable that is being saved/loaded as a parameter so that it can be reused
-
-4.
