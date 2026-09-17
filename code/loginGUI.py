@@ -43,10 +43,13 @@ def firstMenu(window):
     loginLabelFrame.pack(side=LEFT, fill=Y, expand=True, padx=(0, 10))
 
     #input for username
+    ttk.Label(loginLabelFrame, text="Username").pack()
     ttk.Entry(loginLabelFrame, bootstyle=PRIMARY, textvariable= loginUsername).pack(padx=10, pady=10)
 
     #input for password
+    ttk.Label(loginLabelFrame, text="Password").pack()
     ttk.Entry(loginLabelFrame, bootstyle= PRIMARY, textvariable=loginPassword, show="*").pack(padx=10, pady=10)
+
 
     #Button
     ttk.Button(loginLabelFrame, text="Log in", bootstyle= PRIMARY).pack(padx=10, pady=10, fill=X)
