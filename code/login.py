@@ -72,24 +72,3 @@ def login(username, password):
                 return True
     return False
 
-createAccount("username", "Pa$$w0RD")
-
-#create GUI
-
-loginW = ttk.Window(size=(300, 200))
-
-labelFrame = ttk.Labelframe(loginW, text= "Login").pack(expand= True, fill= "both")
-button = ttk.Button(labelFrame, text= "Button").pack()
-
-
-
-
-loginW.mainloop()
-
-
-
-
-
-
-
-
