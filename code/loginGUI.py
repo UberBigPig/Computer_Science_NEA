@@ -85,7 +85,6 @@ def loginButton(username, password):
         print("Logged in")
         return True
     else:
-        print("Joe britt")
         return False
 
 
@@ -93,9 +92,8 @@ def loginButton(username, password):
 
 #function that is called when the create account button is pressed
 def createButton(username, password, confirmPassword):
-    print(f"Username: {username}") 
-    if password == confirmPassword:
-        print("Passwords match")
-    if password != confirmPassword:
-        print("Passwords do not match")
+    login.createAccount(username, password, confirmPassword)
+
+
+
 loginWindow()

@@ -17,7 +17,7 @@ def createAccount(username, password, confirmPassword):
         file.save(accountLogin, "accountLogin")
     elif checkUsername(username) == False:
         print("Username Error")
-    elif checkPassword(password) == False:
+    elif checkPassword(password, confirmPassword) == False:
         print("Password Error")
 
 #check if username is valid
@@ -72,6 +72,8 @@ def login(username, password):
     for i in range(0, len(accountLogin)):
         if username == accountLogin[i][0]:
             if password == accountLogin[i][1]:
+                print("Logged in successfully!")
                 return True
+            print("Incorrect Password")
     return False
 
