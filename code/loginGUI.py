@@ -81,13 +81,19 @@ def firstMenu(window):
 
 #function that is called when log in but is pressed
 def loginButton(username, password):
-    print(f"Username: {username}\n Password: {password}")
+    if login.login(username, password) == True:
+        print("Logged in")
+        return True
+    else:
+        print("Joe britt")
+        return False
+
 
 
 
 #function that is called when the create account button is pressed
 def createButton(username, password, confirmPassword):
-    print(f"Username: {username}")
+    print(f"Username: {username}") 
     if password == confirmPassword:
         print("Passwords match")
     if password != confirmPassword:

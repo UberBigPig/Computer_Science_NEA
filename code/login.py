@@ -9,9 +9,9 @@ accountLogin = file.load("accountLogin")
 print(len(accountLogin))
 
 #create an account
-def createAccount(username, password):
+def createAccount(username, password, confirmPassword):
     #check if details are valid
-    if checkUsername(username) == True and checkPassword(password) == True:
+    if checkUsername(username) == True and checkPassword(password, confirmPassword) == True:
         #save to file
         accountLogin.append([username, password])
         file.save(accountLogin, "accountLogin")
@@ -29,7 +29,7 @@ def checkUsername(username):
 
 
 #check if password is valid
-def checkPassword(password):
+def checkPassword(password, confirmPassword):
     SpecialSym = ["$", "@", "#", "%", "&", "!", "£", "*", "/", "?"]
     checkResult = True
 
@@ -60,6 +60,9 @@ def checkPassword(password):
     # Check for special symbols
     if not any(char in SpecialSym for char in password):
         print('Password should have at least one of the symbols $@#%')
+        checkResult = False
+
+    if password != confirmPassword:
         checkResult = False
 
     return checkResult
