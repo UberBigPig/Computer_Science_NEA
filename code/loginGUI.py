@@ -95,5 +95,23 @@ def createButton(username, password, confirmPassword):
     login.createAccount(username, password, confirmPassword)
 
 
+#create window to show info (e.g. incorrect password)
+def infoWindow(error):
+    infoWindow = ttk.Window()
 
-loginWindow()
+    photo = ttk.PhotoImage(file="resources/warning.png")
+    label = ttk.Label(infoWindow, image=photo)
+    label.image = photo          
+    label.pack(padx=20, pady=20)
+
+
+    ttk.Label(infoWindow, text=error).pack(padx=15, pady=30)
+
+
+    infoWindow.mainloop()
+
+
+
+
+
+infoWindow("Incorrect Password")
