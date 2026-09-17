@@ -102,10 +102,10 @@ def infoWindow(error):
     photo = ttk.PhotoImage(file="resources/warning.png")
     label = ttk.Label(infoWindow, image=photo)
     label.image = photo          
-    label.pack(padx=20, pady=20)
+    label.pack(padx=20, pady=20, side=LEFT)
 
 
-    ttk.Label(infoWindow, text=error).pack(padx=15, pady=30)
+    ttk.Label(infoWindow, text=error).pack(padx=15, pady=30, side=RIGHT)
 
 
     infoWindow.mainloop()
