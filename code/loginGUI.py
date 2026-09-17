@@ -31,9 +31,7 @@ def firstMenu(window):
 
     createUsername = ttk.StringVar()
     createPassword = ttk.StringVar()
-
-
-
+    confirmPassword = ttk.StringVar()
 
     content = ttk.Frame(window)
     content.pack(fill=BOTH, expand=True, padx=10, pady=20)
@@ -52,7 +50,8 @@ def firstMenu(window):
 
 
     #Button
-    ttk.Button(loginLabelFrame, text="Log in", bootstyle= PRIMARY).pack(padx=10, pady=10, fill=X)
+    ttk.Button(loginLabelFrame, text="Log in", bootstyle= PRIMARY, command=lambda: loginButton(loginUsername.get(), loginPassword.get())).pack(padx=10, pady=10, fill=X)
+
 
 
     # separates both parts
@@ -65,12 +64,32 @@ def firstMenu(window):
     createLabelFrame.pack(side=LEFT, fill=Y, expand=True, padx=(10, 0))
 
     #input for username
+    ttk.Label(createLabelFrame, text="Username").pack()
     ttk.Entry(createLabelFrame, bootstyle=PRIMARY, textvariable=createUsername).pack(padx=10, pady=10)
 
     #input for password
+    ttk.Label(createLabelFrame, text="Password").pack()
     ttk.Entry(createLabelFrame, bootstyle= PRIMARY, textvariable=createPassword, show="*").pack(padx=10, pady=10)
 
-    #Button
-    ttk.Button(createLabelFrame, text="Create account", bootstyle= PRIMARY).pack(padx=10, pady=10, fill=X)
+    ttk.Label(createLabelFrame, text="Confirm Password").pack()
+    ttk.Entry(createLabelFrame, bootstyle=PRIMARY, textvariable=confirmPassword, show="*").pack(padx=10, pady=10)
 
+    #Button
+    ttk.Button(createLabelFrame, text="Create account", bootstyle= PRIMARY, command=lambda: createButton(createUsername.get(), createPassword.get(), confirmPassword.get())).pack(padx=10, pady=10, fill=X)
+
+
+
+#function that is called when log in but is pressed
+def loginButton(username, password):
+    print(f"Username: {username}\n Password: {password}")
+
+
+
+#function that is called when the create account button is pressed
+def createButton(username, password, confirmPassword):
+    print(f"Username: {username}")
+    if password == confirmPassword:
+        print("Passwords match")
+    if password != confirmPassword:
+        print("Passwords do not match")
 loginWindow()
