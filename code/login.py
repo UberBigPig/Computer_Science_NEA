@@ -2,6 +2,7 @@
 import files as file
 import ttkbootstrap as ttk
 import tkinter as tk
+import loginGUI
 
 #load files
 accountLogin = file.load("accountLogin")
@@ -24,6 +25,7 @@ def createAccount(username, password, confirmPassword):
 def checkUsername(username):
     for i in range(0, len(accountLogin)):
         if accountLogin[i][0] == username:
+            loginGUI.infoWindow("Username already exists")
             return  False
     return True
 
@@ -63,7 +65,15 @@ def checkPassword(password, confirmPassword):
         checkResult = False
 
     if password != confirmPassword:
+        loginGUI.infoWindow("Passwords do not match")
         checkResult = False
+
+    if checkResult == False:
+        loginGUI.infoWindow("Password must have: \n-between 6 and 20 characters\n-at least one uppercase letter\n-at least one number\n-at least one special symbol")
+
+
+
+    
 
     return checkResult
 
@@ -74,6 +84,7 @@ def login(username, password):
             if password == accountLogin[i][1]:
                 print("Logged in successfully!")
                 return True
-            print("Incorrect Password")
+            loginGUI.infoWindow("Incorrect password")
+        loginGUI.infoWindow("Username does not exist")
     return False
 
