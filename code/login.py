@@ -1,8 +1,8 @@
 #Login system
 import files as file
 import ttkbootstrap as ttk
-import tkinter as tk
-import loginGUI
+from ttkbootstrap.constants import *
+
 
 #load files
 accountLogin = file.load("accountLogin")
@@ -25,7 +25,7 @@ def createAccount(username, password, confirmPassword):
 def checkUsername(username):
     for i in range(0, len(accountLogin)):
         if accountLogin[i][0] == username:
-            loginGUI.infoWindow("Username already exists")
+            infoWindow("Username already exists")
             return  False
     return True
 
@@ -65,16 +65,12 @@ def checkPassword(password, confirmPassword):
         checkResult = False
 
     if password != confirmPassword:
-        loginGUI.infoWindow("Passwords do not match")
+        infoWindow("Passwords do not match")
         checkResult = False
 
     if checkResult == False:
-        loginGUI.infoWindow("Password must have: \n-between 6 and 20 characters\n-at least one uppercase letter\n-at least one number\n-at least one special symbol")
-
-
-
-    
-
+        infoWindow("Password must have: \n-between 6 and 20 characters\n-at least one uppercase letter\n-at least one number\n-at least one special symbol")
+        print("password does not meet requriements")
     return checkResult
 
 #Login to an account
@@ -84,7 +80,21 @@ def login(username, password):
             if password == accountLogin[i][1]:
                 print("Logged in successfully!")
                 return True
-            loginGUI.infoWindow("Incorrect password")
-        loginGUI.infoWindow("Username does not exist")
+            infoWindow("Incorrect password")
+        infoWindow("Username does not exist")
     return False
 
+#create window to show info (e.g. incorrect password)
+def infoWindow(error):
+    infoWindow = ttk.Window()
+
+    photo = ttk.PhotoImage(file="resources/warning.png")
+    label = ttk.Label(infoWindow, image=photo)
+    label.image = photo          
+    label.pack(padx=20, pady=20, side=LEFT)
+
+
+    ttk.Label(infoWindow, text=error).pack(padx=15, pady=30, side=RIGHT)
+
+
+    infoWindow.mainloop()
