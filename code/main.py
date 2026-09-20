@@ -3,6 +3,10 @@ import tkinter as tk
 import files as file
 import login
 
+#to do:
+#- create main window
+#create sidebar for window
+
 lightMode = True
 
 def switchTheme():
