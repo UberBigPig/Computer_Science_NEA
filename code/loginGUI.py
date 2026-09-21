@@ -79,7 +79,7 @@ def firstMenu(window):
 
 
 
-#function that is called when log in but is pressed
+#function that is called when log in button is pressed
 def loginButton(username, password):
     if login.login(username, password) == True:
         print("Logged in")

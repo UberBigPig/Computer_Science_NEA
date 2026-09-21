@@ -73,7 +73,7 @@ def checkPassword(password, confirmPassword):
         print("password does not meet requriements")
     return checkResult
 
-#Login to an account
+#Check if log in info is valid
 def login(username, password):
     for i in range(0, len(accountLogin)):
         if username == accountLogin[i][0]:
