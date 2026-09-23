@@ -62,6 +62,7 @@ def firstMenu(window):
 
 
     #create account section
+    global createLabelFrame
     createLabelFrame = ttk.Labelframe(content, text="Create account")
     createLabelFrame.pack(side=LEFT, fill=Y, expand=True, padx=(10, 0))
 
@@ -77,14 +78,13 @@ def firstMenu(window):
     ttk.Entry(createLabelFrame, bootstyle=PRIMARY, textvariable=confirmPassword, show="*").pack(padx=10, pady=10)
 
     #Button
-    ttk.Button(createLabelFrame, text="Create account", bootstyle= PRIMARY, command=lambda: createButton(createUsername.get(), createPassword.get(), confirmPassword.get())).pack(padx=10, pady=10, fill=X)
+    ttk.Button(createLabelFrame, text="Create account", bootstyle= PRIMARY, command=lambda: createButton(createUsername.get(), createPassword.get(), confirmPassword.get(), createLabelFrame)).pack(padx=10, pady=10, fill=X)
 
 
 
 #function that is called when log in button is pressed
 def loginButton(username, password, frame):
     if login.login(username, password) == True:
-        print("Logged in")
         return True
     else:
         errorWidget("Wrong username or password", frame)
@@ -94,8 +94,11 @@ def loginButton(username, password, frame):
 
 
 #function that is called when the create account button is pressed
-def createButton(username, password, confirmPassword):
-    login.createAccount(username, password, confirmPassword)
+def createButton(username, password, confirmPassword, frame):
+    createErrorCheck(username, password, confirmPassword)
+    if login.createAccount(username, password, confirmPassword) != False:
+        accountCreated()
+    
 
 
 #widget to replace a frame with an error message
@@ -108,9 +111,28 @@ def errorWidget(error, frame):
     ttk.Label(frame, text=error).pack(padx=15, pady=30)
     ttk.Button(frame, text="Back", command=reset).pack()
 
-
+#reset login menu to the first screen
 def reset():
     firstMenu(window)
+
+def createErrorCheck(username, password, confirmPassword):
+    #check username not in use
+    if login.checkUsername(username) == False:
+        errorWidget("Username already exists", createLabelFrame)
+    #check password meets requirements and passwords match
+    elif login.checkPassword(password) != True:
+        errorWidget("Password must have: \n-between 6 and 20 characters\n-at least one uppercase letter\n-at least one number\n-at least one special symbol", createLabelFrame)
+    elif login.checkPasswordMatch(password, confirmPassword) != True:
+        errorWidget("Passwords must match", createLabelFrame)
+
+def accountCreated():
+    clearFrame(createLabelFrame)
+    photo = ttk.PhotoImage(file="resources/success.png")
+    label = ttk.Label(createLabelFrame, image=photo)
+    label.image = photo          
+    label.pack(padx=20, pady=20)
+    ttk.Label(createLabelFrame, text="Account created").pack(padx=15, pady=30)
+
 
 loginWindow()
 

@@ -12,66 +12,63 @@ accountLogin = file.load("accountLogin")
 #create an account
 def createAccount(username, password, confirmPassword):
     #check if details are valid
-    if checkUsername(username) == True and checkPassword(password, confirmPassword) == True:
+    if checkUsername(username) == True and checkPassword(password) == True and checkPasswordMatch(password, confirmPassword):
         #save to file
         accountLogin.append([username, password])
         file.save(accountLogin, "accountLogin")
-    elif checkUsername(username) == False:
-        print("Username Error")
-    elif checkPassword(password, confirmPassword) == False:
-        print("Password Error")
+    else:
+        return False
 
 #check if username is valid
 def checkUsername(username):
     for i in range(0, len(accountLogin)):
         if accountLogin[i][0] == username:
-            infoWindow("Username already exists")
-            return  False
+            return False
     return True
 
 
 #check if password is valid
-def checkPassword(password, confirmPassword):
+def checkPassword(password):
     SpecialSym = ["$", "@", "#", "%", "&", "!", "£", "*", "/", "?"]
     checkResult = True
-
+    
     # Check length
     if len(password) < 6:
-        print('Length should be at least 6')
         checkResult = False
-        
+        ("print too short")
+            
     if len(password) > 20:
-        print('Length should not be greater than 20')
         checkResult = False
-
+        print("too long")
+    
     # Check for digits
     if not any(char.isdigit() for char in password):
-        print('Password should have at least one numeral')
         checkResult = False
-
+        print("no digit")
+    
     # Check for uppercase letters
     if not any(char.isupper() for char in password):
-        print('Password should have at least one uppercase letter')
         checkResult = False
-
+        print("no upper case")
+    
     # Check for lowercase letters
     if not any(char.islower() for char in password):
-        print('Password should have at least one lowercase letter')
         checkResult = False
-
+        print("no lower case")
+    
     # Check for special symbols
     if not any(char in SpecialSym for char in password):
-        print('Password should have at least one of the symbols $@#%')
-        checkResult = False
+       checkResult = False
+       print("no special char")
 
-    if password != confirmPassword:
-        infoWindow("Passwords do not match")
-        checkResult = False
 
-    if checkResult == False:
-        infoWindow("Password must have: \n-between 6 and 20 characters\n-at least one uppercase letter\n-at least one number\n-at least one special symbol")
-        print("password does not meet requriements")
     return checkResult
+
+def checkPasswordMatch(password, confirmPassword):
+    if password == confirmPassword:
+        return True
+    else: 
+        return False
 
 #Check if log in info is valid
 def login(username, password):
@@ -80,9 +77,5 @@ def login(username, password):
             if password == accountLogin[i][1]:
                 print("Logged in successfully!")
                 return True
-            infoWindow("Incorrect password")
-        infoWindow("Username does not exist")
     return False
 
-def infoWindow(error):
-    print(error)
