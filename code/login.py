@@ -7,7 +7,7 @@ from ttkbootstrap.constants import *
 #load files
 accountLogin = file.load("accountLogin")
 
-print(len(accountLogin))
+
 
 #create an account
 def createAccount(username, password, confirmPassword):
@@ -84,17 +84,5 @@ def login(username, password):
         infoWindow("Username does not exist")
     return False
 
-#create window to show info (e.g. incorrect password)
 def infoWindow(error):
-    infoWindow = ttk.Window()
-
-    photo = ttk.PhotoImage(file="resources/warning.png")
-    label = ttk.Label(infoWindow, image=photo)
-    label.image = photo          
-    label.pack(padx=20, pady=20, side=LEFT)
-
-
-    ttk.Label(infoWindow, text=error).pack(padx=15, pady=30, side=RIGHT)
-
-
-    infoWindow.mainloop()
+    print(error)
