@@ -3,12 +3,27 @@ import files as file
 import login
 from ttkbootstrap.constants import *
 
+global username
+username = "Fergus_W"
+
+global settings
+#settings = file.load("settings")
+settings = [["Fergus_W", "nord", "dark"]]
+global userTheme
+global userMode
+for i in range(len(settings)):
+    if settings[i][0] == username:
+        userTheme = settings[i][1]
+        userMode = settings[i][2]
+
+
+
 #create window for GUI widgets
 class climbingTracker(ttk.Window):
     def __init__(self):
         #can also add icon if necessary
         super().__init__(title= "Climbing Tracker", size=(600, 500), iconphoto="resources/logo.png")
-
+        self.theme_use(f"{userTheme}-{userMode}")
         #create sidebar and buttons on left
         pageFrame(self)
 
@@ -25,7 +40,8 @@ class climbingTracker(ttk.Window):
         print(mode)
         useTheme = theme.get()
         self.theme_use(f"{useTheme}-{mode}")
-        print(dark.get())
+        print(dark.get()) 
+        file.save([username, useTheme, mode])
 
 
     #function to clear frame with changing content
