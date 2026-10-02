@@ -7,7 +7,7 @@ from ttkbootstrap.constants import *
 class climbingTracker(ttk.Window):
     def __init__(self):
         #can also add icon if necessary
-        super().__init__(title= "Climbing Tracker", size=(600, 500))
+        super().__init__(title= "Climbing Tracker", size=(600, 500), iconphoto="resources/logo.png")
 
         #create sidebar and buttons on left
         pageFrame(self)
@@ -27,6 +27,22 @@ class climbingTracker(ttk.Window):
         self.clearFrame()
         GLFrame(self)
 
+    def openHome(self):
+        self.clearFrame()
+        home(self)
+
+    def openPrivateLeaderboard(self):
+        self.clearFrame()
+        PLFrame(self)
+
+    def openUserStats(self):
+        self.clearFrame()
+        userStats(self)
+
+    def openSettings(self):
+        self.clearFrame()
+        settings(self)
+
 
 #create sidebar
 class pageFrame(ttk.Frame):
@@ -38,22 +54,29 @@ class pageFrame(ttk.Frame):
         ttk.Separator(self, orient=VERTICAL).pack(side=RIGHT, fill=Y, pady=10)
 
         #button for home menu
-        ttk.Button(self, text="Home").pack(fill=BOTH, pady=5, padx=5)
+        ttk.Button(self, icon="house-fill", text="Home", command=master.openHome).pack(fill=BOTH, pady=5, padx=5)
 
         #button for global leaderboard
-        ttk.Button(self, text="Global Leaderboard", command=master.openGlobalLeaderboard).pack(fill=BOTH, pady=5, padx=5)
+        ttk.Button(self, icon="globe-americas-fill", text="Global Leaderboard", command=master.openGlobalLeaderboard).pack(fill=BOTH, pady=5, padx=5)
 
         #button for private leaderboard
-        ttk.Button(self, text="Private Leaderboard").pack(fill=BOTH, pady=5, padx=5)
+        ttk.Button(self, icon="people-fill", text="Private Leaderboard", command=master.openPrivateLeaderboard).pack(fill=BOTH, pady=5, padx=5)
 
         #button for user stats
-        ttk.Button(self, text="User Statistics").pack(fill=BOTH, pady=5, padx=5)
+        ttk.Button(self, icon="graph-up", text="User Statistics", command=master.openUserStats).pack(fill=BOTH, pady=5, padx=5)
 
         #button for settings
-        ttk.Button(self, text="Settings").pack(fill=BOTH, pady=5, padx=5)
+        ttk.Button(self, icon="gear-fill", text="Settings", command=master.openSettings).pack(fill=BOTH, pady=5, padx=5)
 
         #add more buttons here:
 
+
+#create frame for home page (to log activity and see personal stats etc.)
+class home(ttk.Labelframe):
+    def __init__(self, master):
+        super().__init__(master.contentFrame, text="Home")
+        self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
+        ttk.Label(self, text="home").pack()
 
 
 #create frame for global leaderboard
@@ -61,14 +84,48 @@ class GLFrame(ttk.Labelframe):
     def __init__(self, master):
         super().__init__(master.contentFrame, text="Global Leaderboard")
         self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
+        ttk.Label(self, text="global leaderboard").pack()
+
+#create frame for private leaderboard
+class PLFrame(ttk.Labelframe):
+    def __init__(self, master):
+        super().__init__(master.contentFrame, text="Global Leaderboard")
+        self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
         ttk.Label(self, text="test").pack()
 
+#create frame for user stats
+class userStats(ttk.Labelframe):
+    def __init__(self, master):
+        super().__init__(master.contentFrame, text="User Stats")
+        self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
+        ttk.Label(self, text="search").pack()
 
 
+#create frame for settings
+class settings(ttk.Labelframe):
+    def __init__(self, master):
+        super().__init__(master.contentFrame, text="Settings")
+        self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
+
+        #theme selector label
+        ttk.Label(self, text= "Theme").grid(row=0, column=0, sticky="w", padx=5, pady=10)
+
+        #theme selector
+        theme = ttk.StringVar()
+        ttk.OptionMenu(self, theme, "Catpuccin", "Superhero", "Cyborg").grid(row=0, column=1, sticky="e")
+
+        #dark mode label
+        ttk.Label(self, text= "Dark mode").grid(row=1, column=0, sticky="w", padx=5, pady=10)
+        #dark mode checkbox
+        darkMode = ttk.BooleanVar()
+        ttk.Checkbutton(self, variable=darkMode, bootstyle="round toggle").grid(row=1, column=1, sticky="e", padx=5, pady=10)
 
 
+        ttk.Button(self, text= "apply").grid(column=1, sticky="s", padx=100, pady=25)
 
 
+def applySettings():
+    
 
 
 
