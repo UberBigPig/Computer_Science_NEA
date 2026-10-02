@@ -15,6 +15,19 @@ class climbingTracker(ttk.Window):
         #create frame for content that will change
         self.contentFrame = ttk.Frame(self).pack(side=RIGHT, expand=True, fill=BOTH)
 
+    def applySettings(self, theme, dark):
+        print(dark.get())
+        mode = ""
+        if dark.get() == False:
+            mode = "light"
+        elif dark.get() == True: 
+            mode = "dark"
+        print(mode)
+        useTheme = theme.get()
+        self.theme_use(f"{useTheme}-{mode}")
+        print(dark.get())
+
+
     #function to clear frame with changing content
     def clearFrame(self):
         for widget in self.contentFrame.winfo_children():
@@ -103,29 +116,31 @@ class userStats(ttk.Labelframe):
 
 #create frame for settings
 class settings(ttk.Labelframe):
+
+
     def __init__(self, master):
         super().__init__(master.contentFrame, text="Settings")
         self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
+
+        theme = ttk.StringVar()
+        darkmode = ttk.BooleanVar()
 
         #theme selector label
         ttk.Label(self, text= "Theme").grid(row=0, column=0, sticky="w", padx=5, pady=10)
 
         #theme selector
-        theme = ttk.StringVar()
-        ttk.OptionMenu(self, theme, "Catpuccin", "Superhero", "Cyborg").grid(row=0, column=1, sticky="e")
+        ttk.OptionMenu(self, theme, "bootstrap", "pydata", "nord", "solarized", "catppuccin", "gruvbox", "dracula", "tokyo-night", "one", "everforest", "vapor", "minty", "pulse", "united", "sandstone").grid(row=0, column=1, sticky="e")
 
         #dark mode label
         ttk.Label(self, text= "Dark mode").grid(row=1, column=0, sticky="w", padx=5, pady=10)
         #dark mode checkbox
-        darkMode = ttk.BooleanVar()
-        ttk.Checkbutton(self, variable=darkMode, bootstyle="round toggle").grid(row=1, column=1, sticky="e", padx=5, pady=10)
+        ttk.Checkbutton(self, variable=darkmode, bootstyle="round toggle").grid(row=1, column=1, sticky="e", padx=5, pady=10)
 
 
-        ttk.Button(self, text= "apply").grid(column=1, sticky="s", padx=100, pady=25)
+        ttk.Button(self, text= "apply", command= lambda x = theme, y = darkmode: master.applySettings(x,y)).grid(column=1, sticky="s", padx=100, pady=25)
 
-
-def applySettings():
     
+
 
 
 
