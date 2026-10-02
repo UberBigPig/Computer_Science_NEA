@@ -34,6 +34,9 @@ class pageFrame(ttk.Frame):
         super().__init__(master)
         self.pack(side=LEFT, fill="y", pady=5, padx=5)
 
+        #add seperator for aesthetic purposes
+        ttk.Separator(self, orient=VERTICAL).pack(side=RIGHT, fill=Y, pady=10)
+
         #button for home menu
         ttk.Button(self, text="Home").pack(fill=BOTH, pady=5, padx=5)
 
@@ -43,7 +46,15 @@ class pageFrame(ttk.Frame):
         #button for private leaderboard
         ttk.Button(self, text="Private Leaderboard").pack(fill=BOTH, pady=5, padx=5)
 
+        #button for user stats
+        ttk.Button(self, text="User Statistics").pack(fill=BOTH, pady=5, padx=5)
+
+        #button for settings
+        ttk.Button(self, text="Settings").pack(fill=BOTH, pady=5, padx=5)
+
         #add more buttons here:
+
+
 
 #create frame for global leaderboard
 class GLFrame(ttk.Labelframe):
@@ -51,6 +62,16 @@ class GLFrame(ttk.Labelframe):
         super().__init__(master.contentFrame, text="Global Leaderboard")
         self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
         ttk.Label(self, text="test").pack()
+
+
+
+
+
+
+
+
+
+
 
 
 #run app
