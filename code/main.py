@@ -176,6 +176,7 @@ class settings(ttk.Labelframe):
 #place the login GUI into the main window by putting previous into a file
 
 class loginFrame(ttk.Frame):
+    username = ""
     def __init__(self, master):
         super().__init__(master)
         self.pack(expand=True, fill= BOTH, padx=5)
@@ -204,7 +205,7 @@ class loginFrame(ttk.Frame):
 
 
         #Button
-        ttk.Button(loginLabelFrame, text="Log in", bootstyle= PRIMARY, command=lambda: loginButton(loginUsername.get(), loginPassword.get(), loginLabelFrame)).pack(padx=10, pady=10, fill=X)
+        ttk.Button(loginLabelFrame, text="Log in", bootstyle= PRIMARY, command=lambda: self.loginButton(loginUsername.get(), loginPassword.get())).pack(padx=10, pady=10, fill=X)
 
 
 
@@ -230,6 +231,15 @@ class loginFrame(ttk.Frame):
 
         #Button
         ttk.Button(createLabelFrame, text="Create account", bootstyle= PRIMARY, command=lambda: createButton(createUsername.get(), createPassword.get(), confirmPassword.get(), createLabelFrame)).pack(padx=10, pady=10, fill=X)
+
+    #method for when loginButton is pressed
+    def loginButton(self, username, password):
+        if login.login(username, password) == True:
+            self.username = username
+            print("logged in successfully")
+        else:
+            print("login failed")
+        
 
 
 
