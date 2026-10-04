@@ -5,8 +5,8 @@ import pickle
 #settings = []
 
 #save the variable to a .pkl file
-def save(file, fileName):
-    pickle.dump(file, open(f"resources/{fileName}.pkl", "wb"))
+def save(data, fileName):
+    pickle.dump(data, open(f"resources/{fileName}.pkl", "wb"))
 
 #load a variable from a .pkl file
 def load(fileName):
