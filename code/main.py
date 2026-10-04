@@ -3,11 +3,7 @@ import files as file
 import login
 from ttkbootstrap.constants import *
 
-def getUsername(currentUser):
-    global username 
-    username = currentUser
-    
-
+global username
 
 
 global settings
@@ -63,6 +59,7 @@ class climbingTracker(ttk.Window):
 
     #display global leaderboard
     def openGlobalLeaderboard(self):
+        test()
         self.clearFrame()
         GLFrame(self)
 
@@ -176,7 +173,7 @@ class settings(ttk.Labelframe):
 #place the login GUI into the main window by putting previous into a file
 
 class loginFrame(ttk.Frame):
-    username = ""
+    global currentUser
     def __init__(self, master):
         super().__init__(master.contentFrame)
         self.pack(expand=True, fill= BOTH, padx=5)
@@ -235,7 +232,8 @@ class loginFrame(ttk.Frame):
     #method for when loginButton is pressed
     def loginButton(self, username, password):
         if login.login(username, password) == True:
-            self.username = username
+            global currentUser
+            currentUser = username
             print("logged in successfully")
             climbingTracker.createSidebar(app)
             climbingTracker.openHome(app)
@@ -253,13 +251,14 @@ app = climbingTracker()
 climbingTracker.openLogin(app)
 
 
+def test():
+    print(currentUser)
+
+
 
 #after successfully logging in
 #climbingTracker.createSidebar(app)
 app.mainloop()
-
-
-
 
 
 
