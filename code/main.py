@@ -3,22 +3,9 @@ import files as file
 import login
 from ttkbootstrap.constants import *
 
-global username
 
 
-global settings
-settings = file.load("settings")
-global userTheme
-global userMode
-userTheme = "bootstrap"
-userMode = "light"
-for i in range(len(settings)):
-    if settings[i][0] == username:
-        userTheme = settings[i][1]
-        userMode = settings[i][2]
-    else:
-        userTheme = "bootstrap"
-        usermode = "light"
+
 
 
 #create window for GUI widgets
@@ -26,28 +13,45 @@ class climbingTracker(ttk.Window):
     def __init__(self):
         #can also add icon if necessary
         super().__init__(title= "Climbing Tracker", size=(600, 500), iconphoto="resources/logo.png")
-        self.theme_use(f"{userTheme}-{userMode}")
         #create sidebar and buttons on left
         #pageFrame(self)
 
         #create frame for content that will change
         self.contentFrame = ttk.Frame(self).pack(side=RIGHT, expand=True, fill=BOTH)
 
+    def loadSettings(self):
+        settings = file.load("settings")
+        print(settings)
+        userTheme = "bootstrap"
+        userMode = "light"
+        for i in range(0, len(settings)):
+            if settings[i][0] == currentUser:
+                userTheme = settings[i][1]
+                userMode = settings[i][2]
+        self.theme_use(f"{userTheme}-{userMode}")
+        #self.theme_use("catppuccin-dark")
+        
+
     def createSidebar(self):
         sidebar(self)
 
     def applySettings(self, theme, dark):
-        print(dark.get())
+        settings = file.load("settings")
         mode = ""
         if dark.get() == False:
             mode = "light"
         elif dark.get() == True: 
             mode = "dark"
-        print(mode)
         useTheme = theme.get()
         self.theme_use(f"{useTheme}-{mode}")
-        print(dark.get()) 
-        file.save([username, useTheme, mode])
+        foundUser = False
+        for i in range(0, len(settings)):
+            if currentUser == settings[i][0]:
+                settings[i] = [currentUser, useTheme, mode]
+                foundUser = True
+        if foundUser == False:
+            settings.append([currentUser, useTheme, mode])
+        file.save(settings, "settings")
 
 
     #function to clear frame with changing content
@@ -235,6 +239,7 @@ class loginFrame(ttk.Frame):
             global currentUser
             currentUser = username
             print("logged in successfully")
+            climbingTracker.loadSettings(app)
             climbingTracker.createSidebar(app)
             climbingTracker.openHome(app)
         else:
