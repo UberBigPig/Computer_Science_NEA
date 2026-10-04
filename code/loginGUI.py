@@ -3,7 +3,8 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
 
-
+global currentUser
+currentUser = ""
 
 
 #function to clear the widgets out of a frame
@@ -84,8 +85,10 @@ def firstMenu(window):
 
 #function that is called when log in button is pressed
 def loginButton(username, password, frame):
+    global currentUser
     if login.login(username, password) == True:
-        return True
+        currentUser = username
+        window.destroy()
     else:
         errorWidget("Wrong username or password", frame)
         return False
@@ -132,11 +135,6 @@ def accountCreated():
     label.image = photo          
     label.pack(padx=20, pady=20)
     ttk.Label(createLabelFrame, text="Account created").pack(padx=15, pady=30)
-
-
-loginWindow()
-
-
 
 
 
