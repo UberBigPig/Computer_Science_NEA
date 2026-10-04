@@ -237,7 +237,8 @@ class loginFrame(ttk.Frame):
         if login.login(username, password) == True:
             self.username = username
             print("logged in successfully")
-            climbingTracker.clearFrame()
+            climbingTracker.createSidebar(app)
+            climbingTracker.openHome(app)
         else:
             errorWidget("Wrong username or password")
 
@@ -256,6 +257,7 @@ climbingTracker.openLogin(app)
 #after successfully logging in
 #climbingTracker.createSidebar(app)
 app.mainloop()
+
 
 
 
