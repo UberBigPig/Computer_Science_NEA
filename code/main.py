@@ -178,7 +178,7 @@ class settings(ttk.Labelframe):
 class loginFrame(ttk.Frame):
     username = ""
     def __init__(self, master):
-        super().__init__(master)
+        super().__init__(master.contentFrame)
         self.pack(expand=True, fill= BOTH, padx=5)
 
         loginUsername = ttk.StringVar()
@@ -205,7 +205,7 @@ class loginFrame(ttk.Frame):
 
 
         #Button
-        ttk.Button(loginLabelFrame, text="Log in", bootstyle= PRIMARY, command=lambda: self.loginButton(loginUsername.get(), loginPassword.get())).pack(padx=10, pady=10, fill=X)
+        ttk.Button(loginLabelFrame, text="Log in", bootstyle= PRIMARY, command=lambda: self.loginButton(loginUsername.get(), loginPassword.get())).pack(padx=45, pady=20, fill=X)
 
 
 
@@ -230,15 +230,19 @@ class loginFrame(ttk.Frame):
         ttk.Entry(createLabelFrame, bootstyle=PRIMARY, textvariable=confirmPassword, show="*").pack(padx=10, pady=10)
 
         #Button
-        ttk.Button(createLabelFrame, text="Create account", bootstyle= PRIMARY, command=lambda: createButton(createUsername.get(), createPassword.get(), confirmPassword.get(), createLabelFrame)).pack(padx=10, pady=10, fill=X)
+        ttk.Button(createLabelFrame, text="Create account", bootstyle= PRIMARY, command=lambda: createButton(createUsername.get(), createPassword.get(), confirmPassword.get(), createLabelFrame)).pack(padx=45, pady=20, fill=X)
 
     #method for when loginButton is pressed
     def loginButton(self, username, password):
         if login.login(username, password) == True:
             self.username = username
             print("logged in successfully")
+            climbingTracker.clearFrame()
         else:
-            print("login failed")
+            errorWidget("Wrong username or password")
+
+    #def errorWidget(self, error):
+    #    climbingTracker.clearFrame()
         
 
 
