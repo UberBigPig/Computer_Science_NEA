@@ -82,6 +82,11 @@ class climbingTracker(ttk.Window):
         self.clearFrame()
         settings(self)
 
+    #open the login menu in the main content frame
+    def openLogin(self):
+        self.clearFrame()
+        loginFrame(self)
+
 
 #create sidebar
 class sidebar(ttk.Frame):
@@ -168,18 +173,74 @@ class settings(ttk.Labelframe):
     
 
 #Login GUI
-#place the loging GUI into the main window 
+#place the login GUI into the main window by putting previous into a file
 
-#class loginFrame(ttk.Frame):
-#    def __init__(self, master):
+class loginFrame(ttk.Frame):
+    def __init__(self, master):
+        super().__init__(master)
+        self.pack(expand=True, fill= BOTH, padx=5)
+
+        loginUsername = ttk.StringVar()
+        loginPassword = ttk.StringVar()
+
+        createUsername = ttk.StringVar()
+        createPassword = ttk.StringVar()
+        confirmPassword = ttk.StringVar()
+
+        content = ttk.Frame(self)
+        content.pack(fill=BOTH, expand=True, padx=10, pady=20)
+
+        # login section
+        loginLabelFrame = ttk.Labelframe(content, text="Sign in")
+        loginLabelFrame.pack(side=LEFT, fill=BOTH, expand=True, padx=10)
+
+        #input for username
+        ttk.Label(loginLabelFrame, text="Username").pack()
+        ttk.Entry(loginLabelFrame, bootstyle=PRIMARY, textvariable= loginUsername).pack(padx=10, pady=10)
+
+        #input for password
+        ttk.Label(loginLabelFrame, text="Password").pack()
+        ttk.Entry(loginLabelFrame, bootstyle= PRIMARY, textvariable=loginPassword, show="*").pack(padx=10, pady=10)
+
+
+        #Button
+        ttk.Button(loginLabelFrame, text="Log in", bootstyle= PRIMARY, command=lambda: loginButton(loginUsername.get(), loginPassword.get(), loginLabelFrame)).pack(padx=10, pady=10, fill=X)
+
+
+
+        # separates both parts
+        ttk.Separator(content, orient=VERTICAL, bootstyle=PRIMARY).pack(side=LEFT, fill=Y, pady=10)
+
+
+
+        #create account section
+        createLabelFrame = ttk.Labelframe(content, text="Create account")
+        createLabelFrame.pack(side=LEFT, fill=BOTH, expand=True, padx=10)
+
+        #input for username
+        ttk.Label(createLabelFrame, text="Username").pack()
+        ttk.Entry(createLabelFrame, bootstyle=PRIMARY, textvariable=createUsername).pack(padx=10, pady=10)
+
+        #input for password
+        ttk.Label(createLabelFrame, text="Password").pack()
+        ttk.Entry(createLabelFrame, bootstyle= PRIMARY, textvariable=createPassword, show="*").pack(padx=10, pady=10)
+
+        ttk.Label(createLabelFrame, text="Confirm Password").pack()
+        ttk.Entry(createLabelFrame, bootstyle=PRIMARY, textvariable=confirmPassword, show="*").pack(padx=10, pady=10)
+
+        #Button
+        ttk.Button(createLabelFrame, text="Create account", bootstyle= PRIMARY, command=lambda: createButton(createUsername.get(), createPassword.get(), confirmPassword.get(), createLabelFrame)).pack(padx=10, pady=10, fill=X)
+
+
 
 app = climbingTracker()
 
+climbingTracker.openLogin(app)
 
 
 
 #after successfully logging in
-climbingTracker.createSidebar(app)
+#climbingTracker.createSidebar(app)
 app.mainloop()
 
 
