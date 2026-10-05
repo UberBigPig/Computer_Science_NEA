@@ -233,7 +233,7 @@ class loginFrame(ttk.Frame):
         ttk.Entry(createLabelFrame, bootstyle=PRIMARY, textvariable=confirmPassword, show="*").pack(padx=10, pady=10)
 
         #Button
-        ttk.Button(createLabelFrame, text="Create account", bootstyle= PRIMARY, command=lambda: createButton(createUsername.get(), createPassword.get(), confirmPassword.get(), createLabelFrame)).pack(padx=45, pady=20, fill=X)
+        ttk.Button(createLabelFrame, text="Create account", bootstyle= PRIMARY, command=lambda: self.createButton(createUsername.get(), createPassword.get(), confirmPassword.get())).pack(padx=45, pady=20, fill=X)
 
     #method for when loginButton is pressed
     def loginButton(self, username, password):
@@ -258,6 +258,23 @@ class loginFrame(ttk.Frame):
 
     def reset(self):
         climbingTracker.openLogin(app)
+
+    def createButton(self, username, password, confirmPassword):
+        self.createErrorCheck(username, password, confirmPassword)
+        if login.createAccount(username, password, confirmPassword) != False:
+            accountCreated()
+
+    def createErrorCheck(self, username, password, confirmPassword):
+        #check username not in use
+        if login.checkUsername(username) == False:
+            self.errorWidget("Username already exists")
+        #check password meets requirements and passwords match
+        elif login.checkPassword(password) != True:
+            self.errorWidget("Password must have: \n-between 6 and 20 characters\n-at least one uppercase letter\n-at least one number\n-at least one special symbol")
+        elif login.checkPasswordMatch(password, confirmPassword) != True:
+            self.errorWidget("Passwords must match")
+
+        
 
 
 
