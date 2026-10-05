@@ -85,9 +85,7 @@ class climbingTracker(ttk.Window):
 
     #open the login menu in the main content frame
     def openLogin(self):
-        print("test1")
         self.clearFrame()
-        print("test2")
         loginFrame(self)
 
 
