@@ -85,7 +85,9 @@ class climbingTracker(ttk.Window):
 
     #open the login menu in the main content frame
     def openLogin(self):
+        print("test1")
         self.clearFrame()
+        print("test2")
         loginFrame(self)
 
 
@@ -243,11 +245,19 @@ class loginFrame(ttk.Frame):
             climbingTracker.createSidebar(app)
             climbingTracker.openHome(app)
         else:
-            errorWidget("Wrong username or password")
+            self.errorWidget("Wrong username or password")
 
-    #def errorWidget(self, error):
-    #    climbingTracker.clearFrame()
-        
+    def errorWidget(self, error):
+        climbingTracker.clearFrame(app)
+        photo = ttk.PhotoImage(file="resources/warning.png")
+        label = ttk.Label(self.master, image=photo)
+        label.image = photo          
+        label.pack(padx=20, pady=20)
+        ttk.Label(self.master, text=error).pack(padx=15, pady=30)
+        ttk.Button(self.master, text="Back", command=self.reset).pack()
+
+    def reset(self):
+        climbingTracker.openLogin(app)
 
 
 
