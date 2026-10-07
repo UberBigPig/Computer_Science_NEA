@@ -63,7 +63,6 @@ class climbingTracker(ttk.Window):
 
     #display global leaderboard
     def openGlobalLeaderboard(self):
-        test()
         self.clearFrame()
         GLFrame(self)
 
@@ -283,23 +282,13 @@ class loginFrame(ttk.Frame):
         
 
 
-
+#run app
 app = climbingTracker()
-
 climbingTracker.openLogin(app)
-
-
-def test():
-    print(currentUser)
-
-
-
-#after successfully logging in
-#climbingTracker.createSidebar(app)
 app.mainloop()
 
 
 
 
-#run app
+
 
