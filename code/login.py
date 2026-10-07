@@ -73,11 +73,11 @@ def checkPasswordMatch(password, confirmPassword):
 
 #Check if log in info is valid
 def login(username, password):
-    if len(accountLogin) == 1:
-        if username == accountLogin[0][0] and password == accountLogin[0][1]:
-            return True
-        else: 
-            return False
+    #if len(accountLogin) == 1:
+    #    if username == accountLogin[0][0] and password == accountLogin[0][1]:
+    #        return True
+    #    else: 
+    #        return False
     for i in range(0, len(accountLogin)):
         if username == accountLogin[i][0]:
             if password == accountLogin[i][1]:
@@ -85,4 +85,4 @@ def login(username, password):
                 return True
     return False
 
-print(len(accountLogin))
+
