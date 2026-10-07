@@ -260,7 +260,7 @@ class loginFrame(ttk.Frame):
     def createButton(self, username, password, confirmPassword):
         self.createErrorCheck(username, password, confirmPassword)
         if login.createAccount(username, password, confirmPassword) != False:
-            accountCreated()
+            self.accountCreated()
 
     def createErrorCheck(self, username, password, confirmPassword):
         #check username not in use
@@ -272,6 +272,14 @@ class loginFrame(ttk.Frame):
         elif login.checkPasswordMatch(password, confirmPassword) != True:
             self.errorWidget("Passwords must match")
 
+    def accountCreated(self):
+        climbingTracker.clearFrame(app)
+        photo = ttk.PhotoImage(file="resources/success.png")
+        label = ttk.Label(self.master, image=photo)
+        label.image = photo          
+        label.pack(padx=20, pady=20)
+        ttk.Label(self.master, text="Account created").pack(padx=15, pady=30)
+        ttk.Button(self.master, text="Back", command=self.reset).pack()
         
 
 
