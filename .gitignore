@@ -1,2 +1,5 @@
 *.pkl
 #ignores all pickle files
+
+*.odt 
+#ignores all .odt files
