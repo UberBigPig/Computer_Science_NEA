@@ -2,7 +2,6 @@
 
 import pickle
 
-#settings = []
 
 #save the variable to a .pkl file
 def save(data, fileName):
@@ -13,4 +12,3 @@ def load(fileName):
     fileName = pickle.load(open(f"resources/{fileName}.pkl", "rb"))
     return fileName
 
-#save(settings, "settings")

@@ -151,6 +151,10 @@ class settings(ttk.Labelframe):
         super().__init__(master.contentFrame, text="Settings")
         self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
 
+        #column1 will stretch to fill the gap when the window is expanded
+        self.columnconfigure(1, weight=1)
+        
+        #create necessary variables for input boxes
         theme = ttk.StringVar()
         darkmode = ttk.BooleanVar()
 
