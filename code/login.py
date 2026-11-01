@@ -16,6 +16,7 @@ def createAccount(username, password, confirmPassword):
         #save to file
         accountLogin.append([username, password])
         file.save(accountLogin, "accountLogin")
+        return True
     else:
         return False
 
@@ -34,11 +35,11 @@ def checkPassword(password):
     checkResult = True
     
     # Check length
-    if len(password) < 6:
+    if len(password) <= 6:
         checkResult = False
         ("print too short")
             
-    if len(password) > 20:
+    if len(password) >= 20:
         checkResult = False
         print("too long")
     
@@ -73,16 +74,10 @@ def checkPasswordMatch(password, confirmPassword):
 
 #Check if log in info is valid
 def login(username, password):
-    #if len(accountLogin) == 1:
-    #    if username == accountLogin[0][0] and password == accountLogin[0][1]:
-    #        return True
-    #    else: 
-    #        return False
     for i in range(0, len(accountLogin)):
         if username == accountLogin[i][0]:
             if password == accountLogin[i][1]:
                 print("Logged in successfully!")
                 return True
     return False
-
 

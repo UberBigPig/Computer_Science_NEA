@@ -11,10 +11,8 @@ from ttkbootstrap.constants import *
 #create window for GUI widgets
 class climbingTracker(ttk.Window):
     def __init__(self):
-        #can also add icon if necessary
+        #give window properties (e.g. name, size and icon)
         super().__init__(title= "Climbing Tracker", size=(600, 500), iconphoto="resources/logo.png")
-        #create sidebar and buttons on left
-        #pageFrame(self)
 
         #create frame for content that will change
         self.contentFrame = ttk.Frame(self).pack(side=RIGHT, expand=True, fill=BOTH)
@@ -173,14 +171,16 @@ class settings(ttk.Labelframe):
     
 
 #Login GUI
-#place the login GUI into the main window by putting previous into a file
 
+#create class for frame with login system in
 class loginFrame(ttk.Frame):
     global currentUser
     def __init__(self, master):
+        #frame is placed within content frame in 
         super().__init__(master.contentFrame)
         self.pack(expand=True, fill= BOTH, padx=5)
 
+        #create variables for inputs
         loginUsername = ttk.StringVar()
         loginPassword = ttk.StringVar()
 
@@ -188,6 +188,8 @@ class loginFrame(ttk.Frame):
         createPassword = ttk.StringVar()
         confirmPassword = ttk.StringVar()
 
+        #create frame for login system
+        #this is necessary for a frame to display errors to appear
         content = ttk.Frame(self)
         content.pack(fill=BOTH, expand=True, padx=10, pady=20)
 
@@ -234,33 +236,50 @@ class loginFrame(ttk.Frame):
 
     #method for when loginButton is pressed
     def loginButton(self, username, password):
+        #check if login info is correct
         if login.login(username, password) == True:
+            #initiallise main app
+            #create global variable for current user that can be used to access the user's info when in main app
             global currentUser
             currentUser = username
-            print("logged in successfully")
+            #load the settings for the main app
             climbingTracker.loadSettings(app)
+            #create UI components
             climbingTracker.createSidebar(app)
             climbingTracker.openHome(app)
         else:
+            #show an error message
             self.errorWidget("Wrong username or password")
 
+    #error message 
     def errorWidget(self, error):
+        #clear the frame to make room
         climbingTracker.clearFrame(app)
+        #load photo into memory
         photo = ttk.PhotoImage(file="resources/warning.png")
+        #attach photo to label
         label = ttk.Label(self.master, image=photo)
-        label.image = photo          
+        label.image = photo
         label.pack(padx=20, pady=20)
+        #display error
         ttk.Label(self.master, text=error).pack(padx=15, pady=30)
+        #button to return to main menu
         ttk.Button(self.master, text="Back", command=self.reset).pack()
 
+    #reset screen to main login menu
     def reset(self):
         climbingTracker.openLogin(app)
 
+    #method that gets called when "create account" button is pressed
     def createButton(self, username, password, confirmPassword):
+        #check for errors
         self.createErrorCheck(username, password, confirmPassword)
+        #attempt to create account
         if login.createAccount(username, password, confirmPassword) != False:
+            #tell user that account is created
             self.accountCreated()
 
+    #check for errors when creating account
     def createErrorCheck(self, username, password, confirmPassword):
         #check username not in use
         if login.checkUsername(username) == False:
@@ -271,12 +290,17 @@ class loginFrame(ttk.Frame):
         elif login.checkPasswordMatch(password, confirmPassword) != True:
             self.errorWidget("Passwords must match")
 
+    #show user that account has been created
     def accountCreated(self):
+        #make room for notification
         climbingTracker.clearFrame(app)
+        #load photo into memory
         photo = ttk.PhotoImage(file="resources/success.png")
+        #attach photo to lable
         label = ttk.Label(self.master, image=photo)
         label.image = photo          
         label.pack(padx=20, pady=20)
+        #display message
         ttk.Label(self.master, text="Account created").pack(padx=15, pady=30)
         ttk.Button(self.master, text="Back", command=self.reset).pack()
         
