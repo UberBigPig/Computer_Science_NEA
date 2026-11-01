@@ -27,7 +27,7 @@ class climbingTracker(ttk.Window):
                 userTheme = settings[i][1]
                 userMode = settings[i][2]
         self.theme_use(f"{userTheme}-{userMode}")
-        #self.theme_use("catppuccin-dark")
+
         
 
     def createSidebar(self):
