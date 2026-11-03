@@ -5,7 +5,18 @@ from ttkbootstrap.constants import *
 
 
 
+pointsDictionary = {
+	“V0”: 1,
+	“V1-2”: 2,
+	“V2-3”: 5,
+	“V2-4”: 10,
+	“V3-5”: 25,
+	“V4-6”: 35,
+	“V6-8”: 50,
+	“V8+”: 75
+	}
 
+difficulties = ["V0", "V1-2", "V2-3", "V2-4", "V3-5", "V4-6", "V6-8", "V8+"]
 
 
 #create window for GUI widgets
@@ -118,7 +129,18 @@ class home(ttk.Labelframe):
     def __init__(self, master):
         super().__init__(master.contentFrame, text="Home")
         self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
-        ttk.Label(self, text="home").pack()
+        #log a climb
+        logClimbFrame = ttk.Labelframe(text= "log a climb").pack()
+        
+        attempts = ttk.IntVar()
+        difficulty = ttk.StringVar()
+
+
+        ttk.Label(logClimbFrame, text="Difficulty").pack()
+        ttk.OptionMenu(logClimbFrame, difficulty, "V0", "V1-2", "V2-3", "V2-4", "V3-5", "V4-6", "V6-8", "V8+").pack()
+        ttk.Entry(logClimbFrame, textvariable= attempts, bootstyle=PRIMARY)
+        
+
 
 
 #create frame for global leaderboard
