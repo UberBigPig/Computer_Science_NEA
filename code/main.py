@@ -5,7 +5,6 @@ import tracking
 from ttkbootstrap.constants import *
 
 
-
 pointsDictionary = {
 	"V0": 1,
 	"V1-2": 2,
@@ -131,7 +130,7 @@ class home(ttk.Labelframe):
         super().__init__(master.contentFrame, text="Home")
         self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
         #log a climb
-        logClimbFrame = ttk.Labelframe(self, text= "log a climb").pack(padx=15, pady=15)
+        logClimbFrame = ttk.Labelframe(self, text= "log a climb").pack(padx=15, pady=15, side=LEFT)
         
         attempts = ttk.IntVar()
         difficulty = ttk.StringVar()
@@ -141,7 +140,14 @@ class home(ttk.Labelframe):
         ttk.OptionMenu(logClimbFrame, difficulty, "V0", "V0", "V1-2", "V2-3", "V2-4", "V3-5", "V4-6", "V6-8", "V8+").pack(padx=5, pady=5)
         ttk.Label(logClimbFrame, text="Attempts").pack(padx=5, pady=5)
         ttk.Entry(logClimbFrame, textvariable= attempts, bootstyle=PRIMARY).pack(padx=5, pady=5)
-        ttk.Button(logClimbFrame, text="Submit", bootstyle=PRIMARY, command= lambda x=difficulty.get(), y=attempts.get(): tracking.addClimb(currentUser, x, y)).pack(padx=5, pady=5)
+
+        def logClimb():
+            attemptNumber = attempts.get()
+            climbDifficulty = difficulty.get()
+            tracking.addClimb(currentUser, climbDifficulty, attemptNumber)
+
+        ttk.Button(logClimbFrame, text="Submit", bootstyle=PRIMARY, command= logClimb).pack(padx=5, pady=5)
+        
         
 
 
