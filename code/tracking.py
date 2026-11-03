@@ -45,4 +45,8 @@ def initialliseAccountStats(username):
     accountStats.append(array)
 
 
-#def changeGoal()
+def changeGoal(username, goal):
+    for user in range(0, len(accountStats)):
+        if accountStats[user][0] == username:
+            accountStats[user][5] = goal
+            files.save(accountStats, "accountStats")

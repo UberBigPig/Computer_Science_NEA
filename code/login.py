@@ -12,21 +12,25 @@ accountLogin = file.load("accountLogin")
 #create an account
 def createAccount(username, password, confirmPassword):
     #check if details are valid
+    print("creating account")
     if checkUsername(username) == True and checkPassword(password) == True and checkPasswordMatch(password, confirmPassword):
         #save to file
         accountLogin.append([username, password])
         file.save(accountLogin, "accountLogin")
+        print("account created")
         return True
     else:
+        print("failed")
         return False
+        
 
 #check if username is valid
 def checkUsername(username):
-    if len(accountLogin) != 1:
-        for i in range(0, len(accountLogin)):
-            if accountLogin[i][0] == username:
-                return False
+    for i in range(0, len(accountLogin)):
+        if accountLogin[i][0] == username:
+            return False
     return True
+
 
 
 #check if password is valid

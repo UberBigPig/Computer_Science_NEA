@@ -104,7 +104,7 @@ class sidebar(ttk.Frame):
         self.pack(side=LEFT, fill="y", pady=5, padx=5)
 
         #add seperator for aesthetic purposes
-        ttk.Separator(self, orient=VERTICAL).pack(side=RIGHT, fill=Y, pady=10)
+        ttk.Separator(self, orient=VERTICAL, bootstyle=PRIMARY).pack(side=RIGHT, fill=Y, pady=10)
 
         #button for home menu
         ttk.Button(self, icon="house-fill", text="Home", command=master.openHome).pack(fill=BOTH, pady=5, padx=5)
@@ -125,9 +125,9 @@ class sidebar(ttk.Frame):
 
 
 #create frame for home page (to log activity and see personal stats etc.)
-class home(ttk.Labelframe):
+class home(ttk.Frame):
     def __init__(self, master):
-        super().__init__(master.contentFrame, text="Home")
+        super().__init__(master.contentFrame)
         self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
 
         #entry widget variables
@@ -135,9 +135,8 @@ class home(ttk.Labelframe):
         difficulty = ttk.StringVar()
 
         #log a climb
-        logClimbFrame = ttk.Labelframe(self, text= "log a climb").pack(padx=15, pady=15, side=LEFT)
-
-        ttk.Label(logClimbFrame, text="Difficulty").pack(padx=15)
+        logClimbFrame = ttk.Labelframe(self, text="Log a climb").pack(padx=15, pady=15, side=LEFT, expand=True)
+        ttk.Label(logClimbFrame, text="Difficulty").pack(padx=5)
         ttk.OptionMenu(logClimbFrame, difficulty, "V0", "V0", "V1-2", "V2-3", "V2-4", "V3-5", "V4-6", "V6-8", "V8+").pack(padx=5, pady=5)
         ttk.Label(logClimbFrame, text="Attempts").pack(padx=5, pady=5)
         ttk.Entry(logClimbFrame, textvariable= attempts, bootstyle=PRIMARY).pack(padx=5, pady=5)
@@ -205,7 +204,7 @@ class settings(ttk.Labelframe):
         ttk.Checkbutton(self, variable=darkmode, bootstyle="round toggle").grid(row=1, column=1, sticky="e", padx=5, pady=10)
 
 
-        ttk.Button(self, text= "apply", command= lambda x = theme, y = darkmode: master.applySettings(x,y)).grid(column=1, sticky="s", padx=100, pady=25)
+        ttk.Button(self, text= "Apply", command= lambda x = theme, y = darkmode: master.applySettings(x,y)).grid(column=1, sticky="s", padx=100, pady=25)
 
     
 
@@ -283,6 +282,10 @@ class loginFrame(ttk.Frame):
             currentUser = username
             #load the settings for the main app
             climbingTracker.loadSettings(app)
+
+            #create empty entry in accountStats
+            tracking.initialliseAccountStats(currentUser)
+
             #create UI components
             climbingTracker.createSidebar(app)
             climbingTracker.openHome(app)
@@ -317,6 +320,7 @@ class loginFrame(ttk.Frame):
         if login.createAccount(username, password, confirmPassword) != False:
             #tell user that account is created
             self.accountCreated()
+        return 0
 
     #check for errors when creating account
     def createErrorCheck(self, username, password, confirmPassword):
@@ -328,6 +332,7 @@ class loginFrame(ttk.Frame):
             self.errorWidget("Password must have: \n-between 6 and 20 characters\n-at least one uppercase letter\n-at least one number\n-at least one special symbol")
         elif login.checkPasswordMatch(password, confirmPassword) != True:
             self.errorWidget("Passwords must match")
+
 
     #show user that account has been created
     def accountCreated(self):
