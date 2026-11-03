@@ -1,9 +1,9 @@
 import files
 import datetime
 
-#load file
+#load files
 completedClimbs = files.load("completedClimbs")
-
+accountStats = files.load("accountStats")
 
 #function to add a climb to a user
 def addClimb(username, difficulty, attempts):
@@ -40,4 +40,9 @@ def countPoints(username):
             return total
 
 
+def initialliseAccountStats(username):
+    array = [username, 0, "", 0, "", 5]
+    accountStats.append(array)
 
+
+#def changeGoal()
