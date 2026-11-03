@@ -1,7 +1,7 @@
 import files
 
 #function to add a climb to a user
-def addClimb(username, difficulty):
+def addClimb(username, difficulty, attempts):
     #load file
     completedClimbs = files.load("completedClimbs")
 
