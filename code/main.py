@@ -187,7 +187,7 @@ class settings(ttk.Labelframe):
         ttk.Label(self, text= "Theme").grid(row=0, column=0, sticky="w", padx=5, pady=10)
 
         #theme selector
-        ttk.OptionMenu(self, theme, "bootstrap", "bootstrap", "pydata", "nord", "solarized", "catppuccin", "gruvbox", "dracula", "tokyo-night", "one", "everforest", "vapor", "minty", "pulse", "united", "sandstone").grid(row=0, column=1, sticky="e")
+        ttk.OptionMenu(self, theme, "bootstrap", "bootstrap", "pydata", "nord", "solarized", "catppuccin", "gruvbox", "dracula", "tokyo-night", "one", "everforest", "vapor", "minty", "pulse", "united", "sandstone").grid(row=0, column=1, sticky="e", padx=5, pady=5)
 
         #dark mode label
         ttk.Label(self, text= "Dark mode").grid(row=1, column=0, sticky="w", padx=5, pady=10)
