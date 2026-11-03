@@ -129,12 +129,13 @@ class home(ttk.Labelframe):
     def __init__(self, master):
         super().__init__(master.contentFrame, text="Home")
         self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
-        #log a climb
-        logClimbFrame = ttk.Labelframe(self, text= "log a climb").pack(padx=15, pady=15, side=LEFT)
-        
+
+        #entry widget variables
         attempts = ttk.IntVar()
         difficulty = ttk.StringVar()
 
+        #log a climb
+        logClimbFrame = ttk.Labelframe(self, text= "log a climb").pack(padx=15, pady=15, side=LEFT)
 
         ttk.Label(logClimbFrame, text="Difficulty").pack(padx=15)
         ttk.OptionMenu(logClimbFrame, difficulty, "V0", "V0", "V1-2", "V2-3", "V2-4", "V3-5", "V4-6", "V6-8", "V8+").pack(padx=5, pady=5)
@@ -147,6 +148,9 @@ class home(ttk.Labelframe):
             tracking.addClimb(currentUser, climbDifficulty, attemptNumber)
 
         ttk.Button(logClimbFrame, text="Submit", bootstyle=PRIMARY, command= logClimb).pack(padx=5, pady=5)
+
+        #goal
+        
         
         
 

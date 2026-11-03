@@ -1,4 +1,5 @@
 import files
+import datetime
 
 #load file
 completedClimbs = files.load("completedClimbs")
@@ -11,7 +12,7 @@ def addClimb(username, difficulty, attempts):
     #if array is empty
     if len(completedClimbs) == 0:
         #add to list
-        completedClimbs.append([username, difficulty, attempts])
+        completedClimbs.append([username, difficulty, attempts, datetime.datetime.now()])
         
     else:
         #search for user
@@ -33,7 +34,7 @@ def countPoints(username):
     for user in range(0, len(completedClimbs)):
         if completedClimbs[user][0] == username:
             total = 0
-            for i in range(2, len(completedClimbs[user]), 2):
+            for i in range(2, len(completedClimbs[user]), 3):
                 points = int(completedClimbs[user][i])
                 total = total + points
             return total
