@@ -1,6 +1,7 @@
 import ttkbootstrap as ttk
 import files as file
 import login
+import tracking.py
 from ttkbootstrap.constants import *
 
 
@@ -138,7 +139,8 @@ class home(ttk.Labelframe):
 
         ttk.Label(logClimbFrame, text="Difficulty").pack()
         ttk.OptionMenu(logClimbFrame, difficulty, "V0", "V0", "V1-2", "V2-3", "V2-4", "V3-5", "V4-6", "V6-8", "V8+").pack()
-        ttk.Entry(logClimbFrame, textvariable= attempts, bootstyle=PRIMARY)
+        ttk.Entry(logClimbFrame, textvariable= attempts, bootstyle=PRIMARY).pack()
+        ttk.Button(logClimbFrame, text="Submit", command= lambda x=difficulty.get(), y=attempts.get(): tracking.addClimb(currentUser, x, y))
         
 
 
