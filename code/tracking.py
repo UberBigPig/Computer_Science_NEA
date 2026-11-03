@@ -6,7 +6,7 @@ def addClimb(username, difficulty, attempts):
     completedClimbs = files.load("completedClimbs")
 
     #if array is empty
-    if len(completedClimbs) = 0:
+    if len(completedClimbs) == 0:
         #add to list
         completedClimbs.append([username, difficulty])
         
