@@ -43,6 +43,7 @@ def countPoints(username):
 def initialliseAccountStats(username):
     array = [username, 0, "", 0, "", 5]
     accountStats.append(array)
+    files.save(accountStats, "accountStats")
 
 
 def changeGoal(username, goal):

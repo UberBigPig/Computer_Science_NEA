@@ -130,6 +130,12 @@ class home(ttk.Frame):
         super().__init__(master.contentFrame)
         self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
 
+        #get stats
+        accountStats = file.load("accountStats")
+        for user in range(0, len(accountStats)):
+            if accountStats[user][0] == currentUser:
+                currentStats = accountStats[user]
+
         #entry widget variables
         attempts = ttk.IntVar()
         difficulty = ttk.StringVar()
@@ -149,6 +155,12 @@ class home(ttk.Frame):
         ttk.Button(logClimbFrame, text="Submit", bootstyle=PRIMARY, command= logClimb).pack(padx=5, pady=5)
 
         #goal
+
+
+        points = tracking.countPoints(currentUser)
+        
+        percentAcheived = (points / currentStats[5]) * 100
+        meter = ttk.Meter(self, amount_used=percentAcheived, amount_format="{:.1f}", text_right="%", amount_min=0, subtext="Goal", meter_type="semi", metersize=50).pack()
         
         
         
@@ -284,7 +296,7 @@ class loginFrame(ttk.Frame):
             climbingTracker.loadSettings(app)
 
             #create empty entry in accountStats
-            tracking.initialliseAccountStats(currentUser)
+            
 
             #create UI components
             climbingTracker.createSidebar(app)
@@ -320,6 +332,7 @@ class loginFrame(ttk.Frame):
         if login.createAccount(username, password, confirmPassword) != False:
             #tell user that account is created
             self.accountCreated()
+            tracking.initialliseAccountStats(username)
         return 0
 
     #check for errors when creating account
