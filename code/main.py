@@ -130,14 +130,14 @@ class home(ttk.Labelframe):
         super().__init__(master.contentFrame, text="Home")
         self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
         #log a climb
-        logClimbFrame = ttk.Labelframe(text= "log a climb").pack()
+        logClimbFrame = ttk.Labelframe(self, text= "log a climb").pack()
         
         attempts = ttk.IntVar()
         difficulty = ttk.StringVar()
 
 
         ttk.Label(logClimbFrame, text="Difficulty").pack()
-        ttk.OptionMenu(logClimbFrame, difficulty, "V0", "V1-2", "V2-3", "V2-4", "V3-5", "V4-6", "V6-8", "V8+").pack()
+        ttk.OptionMenu(logClimbFrame, difficulty, "V0", "V0", "V1-2", "V2-3", "V2-4", "V3-5", "V4-6", "V6-8", "V8+").pack()
         ttk.Entry(logClimbFrame, textvariable= attempts, bootstyle=PRIMARY)
         
 
@@ -184,7 +184,7 @@ class settings(ttk.Labelframe):
         ttk.Label(self, text= "Theme").grid(row=0, column=0, sticky="w", padx=5, pady=10)
 
         #theme selector
-        ttk.OptionMenu(self, theme, "bootstrap", "pydata", "nord", "solarized", "catppuccin", "gruvbox", "dracula", "tokyo-night", "one", "everforest", "vapor", "minty", "pulse", "united", "sandstone").grid(row=0, column=1, sticky="e")
+        ttk.OptionMenu(self, theme, "bootstrap", "bootstrap", "pydata", "nord", "solarized", "catppuccin", "gruvbox", "dracula", "tokyo-night", "one", "everforest", "vapor", "minty", "pulse", "united", "sandstone").grid(row=0, column=1, sticky="e")
 
         #dark mode label
         ttk.Label(self, text= "Dark mode").grid(row=1, column=0, sticky="w", padx=5, pady=10)
