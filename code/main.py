@@ -23,10 +23,11 @@ difficulties = ["V0", "V1-2", "V2-3", "V2-4", "V3-5", "V4-6", "V6-8", "V8+"]
 class climbingTracker(ttk.Window):
     def __init__(self):
         #give window properties (e.g. name, size and icon)
-        super().__init__(title= "Climbing Tracker", size=(600, 500), iconphoto="resources/logo.png")
+        super().__init__(title= "Climbing Tracker", size=(600, 500), position=(600, 300), iconphoto="resources/logo.png")
 
         #create frame for content that will change
         self.contentFrame = ttk.Frame(self).pack(side=RIGHT, expand=True, fill=BOTH)
+
 
     def loadSettings(self):
         settings = file.load("settings")
@@ -307,18 +308,15 @@ class loginFrame(ttk.Frame):
 
     #error message 
     def errorWidget(self, error):
-        #clear the frame to make room
-        climbingTracker.clearFrame(app)
-        #load photo into memory
+        errorWindow = ttk.Toplevel(master=self.master, title="Error!", position=(775, 475), size=(250, 300))
         photo = ttk.PhotoImage(file="resources/warning.png")
         #attach photo to label
-        label = ttk.Label(self.master, image=photo)
+        label = ttk.Label(errorWindow, image=photo)
         label.image = photo
-        label.pack(padx=20, pady=20)
+        label.pack(padx=40, pady=20)
         #display error
-        ttk.Label(self.master, text=error).pack(padx=15, pady=30)
-        #button to return to main menu
-        ttk.Button(self.master, text="Back", command=self.reset).pack()
+        ttk.Label(errorWindow, text=error).pack(padx=15, pady=30)
+
 
     #reset screen to main login menu
     def reset(self):
@@ -349,24 +347,21 @@ class loginFrame(ttk.Frame):
 
     #show user that account has been created
     def accountCreated(self):
-        #make room for notification
-        climbingTracker.clearFrame(app)
+        successWindow = ttk.Toplevel(master=self.master, title="Success!", position=(775, 475), size=(250, 175))
         #load photo into memory
         photo = ttk.PhotoImage(file="resources/success.png")
         #attach photo to lable
-        label = ttk.Label(self.master, image=photo)
+        label = ttk.Label(successWindow, image=photo)
         label.image = photo          
         label.pack(padx=20, pady=20)
         #display message
-        ttk.Label(self.master, text="Account created").pack(padx=15, pady=30)
-        ttk.Button(self.master, text="Back", command=self.reset).pack()
+        ttk.Label(successWindow, text="Account created").pack(padx=15, pady=30)
+
         
-class messageWindow()
 
 
 #run app
 app = climbingTracker()
-messageWindow(app)
 climbingTracker.openLogin(app)
 app.mainloop()
 
