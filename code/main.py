@@ -160,7 +160,7 @@ class home(ttk.Frame):
         points = tracking.countPoints(currentUser)
         
         percentAcheived = (points / currentStats[5]) * 100
-        meter = ttk.Meter(self, amount_used=percentAcheived, amount_format="{:.1f}", text_right="%", amount_min=0, subtext="Goal", meter_type="semi", metersize=50).pack()
+        meter = ttk.Meter(self, amount_used=percentAcheived, amount_format="{:.1f}", text_right="%", amount_min=0, subtext="Goal", meter_type="semi").pack()
         
         
         
@@ -361,14 +361,14 @@ class loginFrame(ttk.Frame):
         ttk.Label(self.master, text="Account created").pack(padx=15, pady=30)
         ttk.Button(self.master, text="Back", command=self.reset).pack()
         
+class messageWindow()
 
 
 #run app
 app = climbingTracker()
+messageWindow(app)
 climbingTracker.openLogin(app)
 app.mainloop()
-
-
 
 
 
