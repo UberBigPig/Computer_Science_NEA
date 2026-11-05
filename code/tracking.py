@@ -80,7 +80,26 @@ def countPoints(username):
             return total
     return 0
 
-
+def calcHardest(username):
+    climbCounts = files.load("climbCounts")
+    for user in range(0, len(climbCounts)):
+        if climbCounts[user][0] == username:
+            if climbCounts[user][8] > 0:
+                return "V8+"
+            if climbCounts[user][7] > 0:
+                return "V6-8"
+            if climbCounts[user][6] > 0:
+                return "V4-6"
+            if climbCounts[user][5] > 0:
+                return "V3-5"
+            if climbCounts[user][4] > 0:
+                return "V2-4"
+            if climbCounts[user][3] > 0:
+                return "V2-3"
+            if climbCounts[user][2] > 0:
+                return "V1-2"
+            if climbCounts[user][1] > 0:
+                return "V0"
 
 def initialliseAccountStats(username):
     array = [username, 0, "", 0, "", 5]
@@ -111,6 +130,15 @@ def calcMostComClimb(username):
                     return climbDictionary[i-1], largest
     return "N/A", "N/A"
 
+def calcTotalAttempts(username):
+    for user in range(0, len(completedClimbs)):
+        if completedClimbs[user][0] == username:
+            total = 0
+            print(completedClimbs[user])
+            for i in range(2, len(completedClimbs[user]), 3):
+                total = total + int(completedClimbs[user][i])
+            return total
+    return 0
 
     
 

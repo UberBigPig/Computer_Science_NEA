@@ -97,7 +97,18 @@ class climbingTracker(ttk.Window):
         self.clearFrame()
         loginFrame(self)
 
+    def saveStats(self):
+        accountStats = file.load("accountStats")
+        for user in range(0, len(accountStats)):
+            if accountStats[user][0] == currentUser:
+                hardestClimb = tracking.calcHardest(currentUser)
+                accountStats[user][1] = tracking.countPoints(currentUser)
+                accountStats[user][2] = hardestClimb
+                accountStats[user][3] = tracking.calcTotalAttempts(currentUser)
+                accountStats[user][4] = tracking.countPoints(currentUser)
+        file.save(accountStats, "accountStats")
 
+        
 #create sidebar
 class sidebar(ttk.Frame):
     def __init__(self, master):
@@ -203,6 +214,8 @@ class home(ttk.Frame):
         mostComClimb, totalClimbs = tracking.calcMostComClimb(currentUser)
         ttk.Label(statsFrame, text=f"Most common climb: {mostComClimb}, {totalClimbs} times").pack()
 
+        #save user stats
+        master.saveStats()
 
         
 
@@ -254,7 +267,7 @@ class GLFrame(ttk.Labelframe):
 #create frame for private leaderboard
 class PLFrame(ttk.Labelframe):
     def __init__(self, master):
-        super().__init__(master.contentFrame, text="Global Leaderboard")
+        super().__init__(master.contentFrame, text="Private Leaderboard")
         self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
         ttk.Label(self, text="test").pack()
 
@@ -264,7 +277,33 @@ class userStats(ttk.Labelframe):
         super().__init__(master.contentFrame, text="User Stats")
         self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
         ttk.Label(self, text="search").pack()
+        username = ttk.StringVar()
+        ttk.Entry(self, textvariable= username, bootstyle=PRIMARY).pack()
 
+        statsFrame = ttk.Frame(self).pack()
+
+        def search():
+            #clear frame
+            for widget in statsFrame.winfo_children():
+                widget.destroy()
+
+            accountStats = file.load("accountStats")
+            user = username.get()
+            
+
+            for i in range(0, len(accountStats)):
+                if accountStats[i][0] == user:
+                    statsArray = accountStats[i]
+            print(statsArray)
+            ttk.Label(statsFrame, text=f"Username: {statsArray[0]}", bootstyle=PRIMARY).pack()
+            ttk.Label(statsFrame, text=f"Total Points: {statsArray[1]}").pack()
+            ttk.Label(statsFrame, text=f"Hardest Climb: {statsArray[2]}").pack()
+            ttk.Label(statsFrame, text=f"Total Attempts: {statsArray[3]}").pack()
+
+
+        ttk.Button(self, text="Search", bootstyle=PRIMARY, command=search).pack()
+    
+        
 
 #create frame for settings
 class settings(ttk.Labelframe):
@@ -438,12 +477,10 @@ class loginFrame(ttk.Frame):
 
 
 
-
 #run app
 app = climbingTracker()
 climbingTracker.openLogin(app)
 app.mainloop()
-
 
 
 
