@@ -12,4 +12,3 @@ def load(fileName):
     fileName = pickle.load(open(f"resources/{fileName}.pkl", "rb"))
     return fileName
 
-print(load("completedClimbs"))

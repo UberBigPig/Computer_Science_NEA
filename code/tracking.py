@@ -134,7 +134,6 @@ def calcTotalAttempts(username):
     for user in range(0, len(completedClimbs)):
         if completedClimbs[user][0] == username:
             total = 0
-            print(completedClimbs[user])
             for i in range(2, len(completedClimbs[user]), 3):
                 total = total + int(completedClimbs[user][i])
             return total

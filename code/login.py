@@ -12,15 +12,15 @@ accountLogin = file.load("accountLogin")
 #create an account
 def createAccount(username, password, confirmPassword):
     #check if details are valid
-    print("creating account")
+
     if checkUsername(username) == True and checkPassword(password) == True and checkPasswordMatch(password, confirmPassword):
         #save to file
         accountLogin.append([username, password])
         file.save(accountLogin, "accountLogin")
-        print("account created")
+
         return True
     else:
-        print("failed")
+
         return False
         
 
@@ -41,11 +41,11 @@ def checkPassword(password):
     # Check length
     if len(password) <= 6:
         checkResult = False
-        ("print too short")
+
             
     if len(password) >= 20:
         checkResult = False
-        print("too long")
+
     
     # Check for digits
     if not any(char.isdigit() for char in password):

@@ -23,7 +23,7 @@ difficulties = ["V0", "V1-2", "V2-3", "V2-4", "V3-5", "V4-6", "V6-8", "V8+"]
 class climbingTracker(ttk.Window):
     def __init__(self):
         #give window properties (e.g. name, size and icon)
-        super().__init__(title= "Climbing Tracker", size=(1280, 720), minsize=(600, 500), position=(400, 200), iconphoto="resources/logo.png")
+        super().__init__(title= "Climbing Tracker", size=(1280, 600), minsize=(600, 500), position=(400, 200), iconphoto="resources/logo.png")
 
         #create frame for content that will change
         self.contentFrame = ttk.Frame(self).pack(side=RIGHT, expand=True, fill=BOTH)
@@ -31,7 +31,6 @@ class climbingTracker(ttk.Window):
 
     def loadSettings(self):
         settings = file.load("settings")
-        print(settings)
         userTheme = "bootstrap"
         userMode = "light"
         for i in range(0, len(settings)):
@@ -142,7 +141,7 @@ class home(ttk.Frame):
         super().__init__(master.contentFrame)
         self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
 
-        print(tracking.calcMostComClimb("Fergus"))
+
 
         #get stats
         accountStats = file.load("accountStats")
@@ -173,12 +172,12 @@ class home(ttk.Frame):
         ttk.Button(logClimbFrame, text="Submit", bootstyle=PRIMARY, command= logClimb).pack(padx=5, pady=5)
 
         ##Points explainer
-        pointsFrame = ttk.Labelframe(topFrame, text="Test").pack(fill= BOTH, padx=5, pady=5, side=RIGHT)
+        pointsFrame = ttk.Labelframe(topFrame, text="Points").pack(fill= BOTH, padx=5, pady=5, side=RIGHT)
         ttk.Label(pointsFrame, text=f"{difficulties[0]}: {pointsDictionary[difficulties[0]]} point", anchor="w").grid(column=0, row=0, padx=5, sticky="w")
         for i in range(1, len(pointsDictionary)):
             ttk.Label(pointsFrame, text=f"{difficulties[i]}: {pointsDictionary[difficulties[i]]} points", anchor="w").grid(column=0, row=i, padx=5, sticky="w")
 
-
+        bottomFrame = ttk.Frame(self).pack(side=BOTTOM, expand=True, fill=BOTH)
 
         ##goal
         #variables
@@ -200,19 +199,33 @@ class home(ttk.Frame):
                 master.openHome()
 
         #GUI
-        goalFrame = ttk.Labelframe(self, text="Target points").pack(expand=True, fill= BOTH, padx=5, pady=5, side=LEFT)
+        goalFrame = ttk.Labelframe(bottomFrame, text="Target points").pack(expand=True, fill= BOTH, padx=5, pady=5, side=LEFT)
         meter = ttk.Meter(goalFrame, amount_used=percentAcheived, amount_format="{:.1f}", text_right="%", amount_min=0, subtext="of target", meter_type="semi", metersize=150).pack(padx=5, pady=5)
-        ttk.Label(goalFrame, text="Change target").pack(padx=5, pady=5)
-        ttk.Entry(goalFrame, textvariable=newGoal, bootstyle=PRIMARY).pack(padx=5, pady=5)
-        ttk.Button(goalFrame, text= "Change", command=changeGoal, bootstyle=PRIMARY).pack(padx=5, pady=5)
+        lowerFrame = ttk.Frame(goalFrame).pack(side=BOTTOM, expand=True, fill=BOTH)
+        changeFrame = ttk.Frame(lowerFrame).pack(side=LEFT, expand=True, fill = BOTH)
+        ttk.Label(changeFrame, text="Change target").pack(padx=5, pady=5)
+        ttk.Entry(changeFrame, textvariable=newGoal, bootstyle=PRIMARY).pack(padx=5, pady=5)
+        ttk.Button(changeFrame, text= "Change", command=changeGoal, bootstyle=PRIMARY).pack(padx=5, pady=5)
+
+        rightFrame = ttk.Frame(lowerFrame).pack(side=RIGHT, expand=True, fill=BOTH)
+        ttk.Label(rightFrame, text=("Progress")).pack(pady=5)
+        ttk.Label(rightFrame, text=f"{points}/{currentStats[5]}", bootstyle=PRIMARY, font="-size 36 -weight bold").pack(pady=12)
         
         ##User stats
-        statsFrame = ttk.Labelframe(self, text="Stats").pack(side=RIGHT, expand=True, fill=BOTH, padx=5, pady=5)
+        bottomRightFrame = ttk.Frame(bottomFrame).pack(side=RIGHT, expand=True, fill=BOTH)
+        statsFrame = ttk.Labelframe(bottomRightFrame, text="Stats").pack(side=TOP, expand=True, fill=BOTH, padx=5, pady=5)
         ttk.Label(statsFrame, text=f"{points} points", bootstyle=PRIMARY, font="-size 18 -weight bold").pack()
         ttk.Label(statsFrame, text=f"Goal: {currentStats[5]}", anchor="w").pack()
-        print(tracking.calcMostComClimb)
         mostComClimb, totalClimbs = tracking.calcMostComClimb(currentUser)
         ttk.Label(statsFrame, text=f"Most common climb: {mostComClimb}, {totalClimbs} times").pack()
+        ttk.Label(statsFrame, text=f"Hardest climb: {tracking.calcHardest(currentUser)}").pack()
+        ttk.Label(statsFrame, text=f"Total attempts: {tracking.calcTotalAttempts(currentUser)}").pack()
+
+        #position on leaderboard
+        rankFrame = ttk.Labelframe(bottomRightFrame, text="Ranking").pack(expand=True, fill=BOTH, padx=5, pady=5, side=BOTTOM)
+        ttk.Label(rankFrame, text=f"{points}/{currentStats[5]}", bootstyle=PRIMARY, font="-size 36 -weight bold").pack(pady=12)
+        numbOfUsers = len(accountStats)
+        ttk.Label(rankFrame, text=f"out of {numbOfUsers} users").pack()
 
         #save user stats
         master.saveStats()
@@ -239,7 +252,7 @@ class GLFrame(ttk.Labelframe):
         for user in range(0, len(accountStats)):
             tempArray.append([accountStats[user][0], tracking.countPoints(accountStats[user][0])])
 
-        print(tempArray)
+
         leaderboard = ttk.Tableview(
             self,
             coldata=["Username", "Points"],
@@ -294,7 +307,7 @@ class userStats(ttk.Labelframe):
             for i in range(0, len(accountStats)):
                 if accountStats[i][0] == user:
                     statsArray = accountStats[i]
-            print(statsArray)
+
             ttk.Label(statsFrame, text=f"Username: {statsArray[0]}", bootstyle=PRIMARY).pack()
             ttk.Label(statsFrame, text=f"Total Points: {statsArray[1]}").pack()
             ttk.Label(statsFrame, text=f"Hardest Climb: {statsArray[2]}").pack()
