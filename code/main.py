@@ -223,10 +223,9 @@ class home(ttk.Frame):
 
 
         #position on leaderboard
-
         rankFrame = ttk.Labelframe(bottomRightFrame, text="Ranking").pack(expand=True, fill=BOTH, padx=5, pady=5, side=BOTTOM)
-        ttk.Label(rankFrame, text=f"{userPosition}/{numbOfUsers}", bootstyle=PRIMARY, font="-size 36 -weight bold").pack(pady=12)
         numbOfUsers = len(accountStats)
+        ttk.Label(rankFrame, text=f"#{findPosition(currentUser)}", bootstyle=PRIMARY, font="-size 36 -weight bold").pack(pady=12)
         ttk.Label(rankFrame, text=f"out of {numbOfUsers} users").pack()
 
         #save user stats
@@ -492,18 +491,18 @@ def sortUsers():
     sortedUsers = file.load("accountStats")
     for i in range(len(sortedUsers)-1):
         for j in range(len(sortedUsers)-1-i):
-            if int(sortedUsers[j][3]) < int(sortedUsers[j+1][3]):
+            if int(sortedUsers[j][1]) < int(sortedUsers[j+1][1]):
                 sortedUsers[j], sortedUsers[j+1] = sortedUsers[j+1], sortedUsers[j]
     return sortedUsers
 
 def findPosition(username):
     array = sortUsers()
-    for user in array:
+    for user in range(0, len(array)):
         if array[user][0] == username:
             return user + 1
 
 
-    
+print(sortUsers())
 
 
 
