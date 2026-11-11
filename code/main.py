@@ -223,6 +223,7 @@ class home(ttk.Frame):
 
 
         #position on leaderboard
+
         rankFrame = ttk.Labelframe(bottomRightFrame, text="Ranking").pack(expand=True, fill=BOTH, padx=5, pady=5, side=BOTTOM)
         ttk.Label(rankFrame, text=f"{userPosition}/{numbOfUsers}", bootstyle=PRIMARY, font="-size 36 -weight bold").pack(pady=12)
         numbOfUsers = len(accountStats)
@@ -495,6 +496,11 @@ def sortUsers():
                 sortedUsers[j], sortedUsers[j+1] = sortedUsers[j+1], sortedUsers[j]
     return sortedUsers
 
+def findPosition(username):
+    array = sortUsers()
+    for user in array:
+        if array[user][0] == username:
+            return user + 1
 
 
     
