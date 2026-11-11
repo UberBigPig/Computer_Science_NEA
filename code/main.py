@@ -39,7 +39,7 @@ class climbingTracker(ttk.Window):
                 userMode = settings[i][2]
         self.theme_use(f"{userTheme}-{userMode}")
 
-        
+
 
     def createSidebar(self):
         sidebar(self)
@@ -49,7 +49,7 @@ class climbingTracker(ttk.Window):
         mode = ""
         if dark.get() == False:
             mode = "light"
-        elif dark.get() == True: 
+        elif dark.get() == True:
             mode = "dark"
         useTheme = theme.get()
         self.theme_use(f"{useTheme}-{mode}")
@@ -107,7 +107,7 @@ class climbingTracker(ttk.Window):
                 accountStats[user][4] = tracking.countPoints(currentUser)
         file.save(accountStats, "accountStats")
 
-        
+
 #create sidebar
 class sidebar(ttk.Frame):
     def __init__(self, master):
@@ -158,10 +158,10 @@ class home(ttk.Frame):
         ##log a climb
         logClimbFrame = ttk.Labelframe(topFrame, text="Log a climb").pack(fill= BOTH, padx=5, pady=5, side=LEFT, expand=True)
         ttk.Label(logClimbFrame, text="Difficulty").pack(padx=5, side=TOP)
-        ttk.OptionMenu(logClimbFrame, difficulty, "V0", "V0", "V1-2", "V2-3", "V2-4", "V3-5", "V4-6", "V6-8", "V8+").pack(padx=5, pady=5, side=TOP)       
+        ttk.OptionMenu(logClimbFrame, difficulty, "V0", "V0", "V1-2", "V2-3", "V2-4", "V3-5", "V4-6", "V6-8", "V8+").pack(padx=5, pady=5, side=TOP)
         ttk.Label(logClimbFrame, text="Attempts").pack(padx=5, side=TOP)
         ttk.Entry(logClimbFrame, textvariable= attempts, bootstyle=PRIMARY).pack(padx=5, pady=5, side=TOP)
-        
+
 
         def logClimb():
             attemptNumber = attempts.get()
@@ -210,7 +210,7 @@ class home(ttk.Frame):
         rightFrame = ttk.Frame(lowerFrame).pack(side=RIGHT, expand=True, fill=BOTH)
         ttk.Label(rightFrame, text=("Progress")).pack(pady=5)
         ttk.Label(rightFrame, text=f"{points}/{currentStats[5]}", bootstyle=PRIMARY, font="-size 36 -weight bold").pack(pady=12)
-        
+
         ##User stats
         bottomRightFrame = ttk.Frame(bottomFrame).pack(side=RIGHT, expand=True, fill=BOTH)
         statsFrame = ttk.Labelframe(bottomRightFrame, text="Stats").pack(side=TOP, expand=True, fill=BOTH, padx=5, pady=5)
@@ -221,16 +221,17 @@ class home(ttk.Frame):
         ttk.Label(statsFrame, text=f"Hardest climb: {tracking.calcHardest(currentUser)}").pack()
         ttk.Label(statsFrame, text=f"Total attempts: {tracking.calcTotalAttempts(currentUser)}").pack()
 
+
         #position on leaderboard
         rankFrame = ttk.Labelframe(bottomRightFrame, text="Ranking").pack(expand=True, fill=BOTH, padx=5, pady=5, side=BOTTOM)
-        ttk.Label(rankFrame, text=f"{points}/{currentStats[5]}", bootstyle=PRIMARY, font="-size 36 -weight bold").pack(pady=12)
+        ttk.Label(rankFrame, text=f"{userPosition}/{numbOfUsers}", bootstyle=PRIMARY, font="-size 36 -weight bold").pack(pady=12)
         numbOfUsers = len(accountStats)
         ttk.Label(rankFrame, text=f"out of {numbOfUsers} users").pack()
 
         #save user stats
         master.saveStats()
 
-        
+
 
 
 
@@ -302,7 +303,7 @@ class userStats(ttk.Labelframe):
 
             accountStats = file.load("accountStats")
             user = username.get()
-            
+
 
             for i in range(0, len(accountStats)):
                 if accountStats[i][0] == user:
@@ -315,8 +316,8 @@ class userStats(ttk.Labelframe):
 
 
         ttk.Button(self, text="Search", bootstyle=PRIMARY, command=search).pack()
-    
-        
+
+
 
 #create frame for settings
 class settings(ttk.Labelframe):
@@ -328,7 +329,7 @@ class settings(ttk.Labelframe):
 
         #column1 will stretch to fill the gap when the window is expanded
         self.columnconfigure(1, weight=1)
-        
+
         #create necessary variables for input boxes
         theme = ttk.StringVar()
         darkmode = ttk.BooleanVar()
@@ -347,7 +348,7 @@ class settings(ttk.Labelframe):
 
         ttk.Button(self, text= "Apply", command= lambda x = theme, y = darkmode: master.applySettings(x,y)).grid(column=1, sticky="s", padx=100, pady=25)
 
-    
+
 
 #Login GUI
 
@@ -355,7 +356,7 @@ class settings(ttk.Labelframe):
 class loginFrame(ttk.Frame):
     global currentUser
     def __init__(self, master):
-        #frame is placed within content frame in 
+        #frame is placed within content frame in
         super().__init__(master.contentFrame)
         self.pack(expand=True, fill= BOTH, padx=5)
 
@@ -425,7 +426,7 @@ class loginFrame(ttk.Frame):
             climbingTracker.loadSettings(app)
 
             #create empty entry in accountStats
-            
+
             #create UI components
             climbingTracker.createSidebar(app)
             climbingTracker.openHome(app)
@@ -433,7 +434,7 @@ class loginFrame(ttk.Frame):
             #show an error message
             self.errorWidget("Wrong username or password")
 
-    #error message 
+    #error message
     def errorWidget(self, error):
         errorWindow = ttk.Toplevel(master=self.master, title="Error!", position=(775, 475), size=(250, 300))
         photo = ttk.PhotoImage(file="resources/warning.png")
@@ -479,14 +480,24 @@ class loginFrame(ttk.Frame):
         photo = ttk.PhotoImage(file="resources/success.png")
         #attach photo to lable
         label = ttk.Label(successWindow, image=photo)
-        label.image = photo          
+        label.image = photo
         label.pack(padx=20, pady=20)
         #display message
         ttk.Label(successWindow, text="Account created").pack(padx=15, pady=30)
 
 
 
+def sortUsers():
+    sortedUsers = file.load("accountStats")
+    for i in range(len(sortedUsers)-1):
+        for j in range(len(sortedUsers)-1-i):
+            if int(sortedUsers[j][3]) < int(sortedUsers[j+1][3]):
+                sortedUsers[j], sortedUsers[j+1] = sortedUsers[j+1], sortedUsers[j]
+    return sortedUsers
 
+
+
+    
 
 
 
@@ -494,6 +505,3 @@ class loginFrame(ttk.Frame):
 app = climbingTracker()
 climbingTracker.openLogin(app)
 app.mainloop()
-
-
-
