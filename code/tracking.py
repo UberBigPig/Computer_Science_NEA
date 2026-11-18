@@ -33,9 +33,9 @@ accountStats = files.load("accountStats")
 
 #function to add a climb to a user
 def addClimb(username, difficulty, attempts):
-    
+
     date = str(datetime.date.today())
-    
+
 
     climbCounts = files.load("climbCounts")
     for user in range(0, len(climbCounts)):
@@ -50,7 +50,7 @@ def addClimb(username, difficulty, attempts):
     if len(completedClimbs) == 0:
         #add to list
         completedClimbs.append([username, difficulty, attempts, date])
-        
+
     else:
         #search for user
         for user in range(0, len(completedClimbs)):
@@ -69,10 +69,13 @@ def addClimb(username, difficulty, attempts):
 
 #function to count how many points a user has
 def countPoints(username):
+    #search for the user
     for user in range(0, len(completedClimbs)):
         if completedClimbs[user][0] == username:
             total = 0
+            #search through the list the user's completed climbs
             for i in range(1, len(completedClimbs[user]), 3):
+                #add points associated to the difficulty of the climb
                 points = pointsDictionary[completedClimbs[user][i]]
                 total = total + points
             if total == None:
@@ -138,7 +141,3 @@ def calcTotalAttempts(username):
                 total = total + int(completedClimbs[user][i])
             return total
     return 0
-
-    
-
-
