@@ -141,11 +141,12 @@ class home(ttk.Frame):
         super().__init__(master.contentFrame)
         self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
 
-        userStatsFrame(self, self, currentUser).pack()
+
 
         #get stats
+        currentStats = []
         accountStats = file.load("accountStats")
-        for user in range(0, len(accountStats)):
+        for user in range(len(accountStats)):
             if accountStats[user][0] == currentUser:
                 currentStats = accountStats[user]
 
@@ -180,22 +181,24 @@ class home(ttk.Frame):
         bottomFrame = ttk.Frame(self).pack(side=BOTTOM, expand=True, fill=BOTH)
 
         ##goal
+        #
         #variables
-
         points = tracking.countPoints(currentUser)
         percentAcheived = (int(points) / int(currentStats[5])) * 100
-
-
         newGoal = ttk.IntVar()
 
         #change goal function
         def changeGoal():
+            # ignore input if null
             if newGoal.get() == "":
                 return 1
+            #ignore input if 0
             if newGoal.get() == 0:
                 return 1
             else:
+                #change user's goal
                 tracking.changeGoal(currentUser, newGoal.get())
+                #reload page
                 master.openHome()
 
         #GUI
@@ -267,24 +270,7 @@ class GLFrame(ttk.Labelframe):
         leaderboard.sort_column_data(cid=1, sort=1)
 
 
-class userStatsFrame(ttk.Labelframe):
-    def __init__(self, master, frame, username):
-        super().__init__(frame, text="Stats")
 
-
-        accountStats = file.load("accountStats")
-        for user in range(0, len(accountStats)):
-            if accountStats[user][0] == username:
-                currentStats = accountStats[user]
-
-        points = tracking.countPoints(username)
-
-        ttk.Label(self, text=f"{points} points", bootstyle=PRIMARY, font="-size 18 -weight bold").pack()
-        ttk.Label(self, text=f"Goal: {currentStats[5]}", anchor="w").pack()
-        mostComClimb, totalClimbs = tracking.calcMostComClimb(currentUser)
-        ttk.Label(self, text=f"Most common climb: {mostComClimb}, {totalClimbs} times").pack()
-        ttk.Label(self, text=f"Hardest climb: {tracking.calcHardest(currentUser)}").pack()
-        ttk.Label(self, text=f"Total attempts: {tracking.calcTotalAttempts(currentUser)}").pack()
 
 
 
