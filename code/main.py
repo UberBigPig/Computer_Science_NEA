@@ -232,6 +232,7 @@ class home(ttk.Frame):
         ttk.Label(rankFrame, text=f"out of {numbOfUsers} users").pack()
 
         #save user stats
+        #will save whenever the homepage is opened, e.g. on startup
         master.saveStats()
 
 
