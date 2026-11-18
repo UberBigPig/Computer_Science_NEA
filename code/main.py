@@ -228,7 +228,7 @@ class home(ttk.Frame):
         #position on leaderboard
         rankFrame = ttk.Labelframe(bottomRightFrame, text="Ranking").pack(expand=True, fill=BOTH, padx=5, pady=5, side=BOTTOM)
         numbOfUsers = len(accountStats)
-        ttk.Label(rankFrame, text=f"#{findPosition(currentUser)}", bootstyle=PRIMARY, font="-size 36 -weight bold").pack(pady=12)
+        ttk.Label(rankFrame, text=f"{findPosition(currentUser)}", bootstyle=PRIMARY, font="-size 36 -weight bold").pack(pady=12)
         ttk.Label(rankFrame, text=f"out of {numbOfUsers} users").pack()
 
         #save user stats
