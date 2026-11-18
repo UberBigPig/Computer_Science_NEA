@@ -308,7 +308,7 @@ class userStats(ttk.Labelframe):
             accountStats = file.load("accountStats")
             user = username.get()
 
-
+            statsArray = []
             for i in range(0, len(accountStats)):
                 if accountStats[i][0] == user:
                     statsArray = accountStats[i]
@@ -505,8 +505,26 @@ def findPosition(username):
         if array[user][0] == username:
             return user + 1
 
+#Frame to display the stats of a user
+# user and frame it is placed in taken as parameter
+class userStatsFrame(ttk.Labelframe):
+    def __init__(self, master, frame, username):
+        super().__init__(frame, text="Stats")
 
-print(sortUsers())
+        currentStats = []
+        accountStats = file.load("accountStats")
+        for user in range(0, len(accountStats)):
+            if accountStats[user][0] == username:
+                currentStats = accountStats[user]
+
+        points = tracking.countPoints(username)
+
+        ttk.Label(self, text=f"{points} points", bootstyle=PRIMARY, font="-size 18 -weight bold").pack()
+        ttk.Label(self, text=f"Goal: {currentStats[5]}", anchor="w").pack()
+        mostComClimb, totalClimbs = tracking.calcMostComClimb(currentUser)
+        ttk.Label(self, text=f"Most common climb: {mostComClimb}, {totalClimbs} times").pack()
+        ttk.Label(self, text=f"Hardest climb: {tracking.calcHardest(currentUser)}").pack()
+        ttk.Label(self, text=f"Total attempts: {tracking.calcTotalAttempts(currentUser)}").pack()
 
 
 
