@@ -287,7 +287,31 @@ class PLFrame(ttk.Labelframe):
     def __init__(self, master):
         super().__init__(master.contentFrame, text="Private Leaderboard")
         self.pack(side = RIGHT, expand=True, fill= BOTH, padx=5)
-        ttk.Label(self, text="test").pack()
+        ttk.Label(self, text="Add a friend").pack()
+        variable = ttk.StringVar()
+        ttk.Entry(self, textvariable=variable, bootstyle=PRIMARY).pack()
+        ttk.Button(self, text = "Add", bootstyle=PRIMARY, command=self.button).pack()
+
+        accountStats = file.load("accountStats")
+        tempArray = []
+        for user in range(0, len(accountStats)):
+            tempArray.append([accountStats[user][0], tracking.countPoints(accountStats[user][0])])
+
+
+        leaderboard = ttk.Tableview(
+            self,
+            coldata=["Username", "Points"],
+            rowdata=tempArray,
+            bootstyle="primary",
+            searchable=True,
+            paginated=True,
+            pagesize=10,
+        )
+        leaderboard.pack(fill="both", expand=True, padx=20, pady=20, side= TOP)
+        leaderboard.sort_column_data(cid=1, sort=1)
+        
+    def button(self):
+        climbingTracker.openPrivateLeaderboard(app)
 
 #create frame for user stats
 class userStats(ttk.Labelframe):
@@ -305,18 +329,7 @@ class userStats(ttk.Labelframe):
             for widget in statsFrame.winfo_children():
                 widget.destroy()
 
-            accountStats = file.load("accountStats")
-            user = username.get()
-
-            statsArray = []
-            for i in range(0, len(accountStats)):
-                if accountStats[i][0] == user:
-                    statsArray = accountStats[i]
-
-            ttk.Label(statsFrame, text=f"Username: {statsArray[0]}", bootstyle=PRIMARY).pack()
-            ttk.Label(statsFrame, text=f"Total Points: {statsArray[1]}").pack()
-            ttk.Label(statsFrame, text=f"Hardest Climb: {statsArray[2]}").pack()
-            ttk.Label(statsFrame, text=f"Total Attempts: {statsArray[3]}").pack()
+            userStatsFrame(self, self, username).pack()
 
 
         ttk.Button(self, text="Search", bootstyle=PRIMARY, command=search).pack()
