@@ -228,7 +228,7 @@ class home(ttk.Frame):
         #position on leaderboard
         rankFrame = ttk.Labelframe(bottomRightFrame, text="Ranking").pack(expand=True, fill=BOTH, padx=5, pady=5, side=BOTTOM)
         numbOfUsers = len(accountStats)
-        ttk.Label(rankFrame, text=f"{findPosition(currentUser)}", bootstyle=PRIMARY, font="-size 36 -weight bold").pack(pady=12)
+        ttk.Label(rankFrame, text=f"#{findPosition(currentUser)}", bootstyle=PRIMARY, font="-size 36 -weight bold").pack(pady=12)
         ttk.Label(rankFrame, text=f"out of {numbOfUsers} users").pack()
 
         #save user stats
@@ -329,7 +329,7 @@ class userStats(ttk.Labelframe):
             for widget in statsFrame.winfo_children():
                 widget.destroy()
 
-            userStatsFrame(self, self, username).pack()
+            userStatsFrame(self, self, username.get()).pack()
 
 
         ttk.Button(self, text="Search", bootstyle=PRIMARY, command=search).pack()
@@ -534,7 +534,9 @@ class userStatsFrame(ttk.Labelframe):
                 currentStats = accountStats[user]
         #calculate points
         points = tracking.countPoints(username)
-
+        print(username)
+        print(currentStats)
+        print(accountStats)
         #GUI
         # total points
         ttk.Label(self, text=f"{points} points", bootstyle=PRIMARY, font="-size 18 -weight bold").pack()
